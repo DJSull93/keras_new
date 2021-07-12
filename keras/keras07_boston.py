@@ -17,7 +17,7 @@ x = datasets.data # (506, 13) input_dim = 13
 y = datasets.target # (506,) output_dim = 1
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-      test_size=0.2, shuffle=True, random_state=5)
+      test_size=0.2, shuffle=True, random_state=12)
 
 print(x.shape)
 print(y.shape)
@@ -34,12 +34,13 @@ model.add(Dense(22))
 model.add(Dense(22))
 model.add(Dense(11))
 model.add(Dense(33))
+model.add(Dense(33))
 model.add(Dense(22))
 model.add(Dense(21))
 model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam')
-model.fit(x_train, y_train, epochs=121, batch_size=1)
+model.fit(x_train, y_train, epochs=100, batch_size=1, verbose=0)
 
 y_predict = model.predict([x_test])
 print('x의 예측값 : ', y_predict)

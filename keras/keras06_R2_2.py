@@ -20,15 +20,13 @@ model.add(Dense(10))
 model.add(Dense(10))
 model.add(Dense(10))
 model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
 model.add(Dense(1))
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
       train_size=0.6, shuffle=True)
 
 model.compile(loss='mse', optimizer='adam')
-model.fit(x_train, y_train, epochs=500, batch_size=1)
+model.fit(x_train, y_train, epochs=1000, batch_size=1)
 
 loss = model.evaluate(x_test, y_test)
 print('loss : ', loss)
