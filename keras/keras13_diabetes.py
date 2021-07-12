@@ -1,5 +1,5 @@
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Dropout, Activation
 import numpy as np
 from sklearn import datasets
 # import pandas as pd
@@ -29,27 +29,30 @@ y = datasets.target # (442,)
 #print(np.min(y), np.max(y)) # 25.0 346.0
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-      test_size=0.4, shuffle=True, random_state=12)
+      test_size=0.4, shuffle=True, random_state=66)
 
 # 2. model 구성
 model = Sequential()
-model.add(Dense(15, input_dim=10))
-model.add(Dense(22))
-model.add(Dense(22))
-model.add(Dense(11))
-model.add(Dense(33))
-model.add(Dense(33))
-model.add(Dense(1))
+model.add(Dense(50, activation="relu" ,input_dim=10))
+model.add(Dense(20, activation="relu"))
+model.add(Dense(10, activation="relu"))
+model.add(Dense(30, activation="relu"))
+model.add(Dense(40, activation="relu"))
+model.add(Dense(20, activation="relu"))
+model.add(Dense(10, activation="relu"))
+model.add(Dense(20, activation="relu"))
+model.add(Dense(10, activation="relu"))
+model.add(Dense(1, activation="relu"))
 
 # 3. 컴파일 훈련
-model.compile(loss='mae', optimizer='adam')
-model.fit(x_train, y_train, epochs=1100, batch_size=1,
- verbose=0, validation_split=0.2, shuffle=True)
+model.compile(loss='mse', optimizer='adam')
+model.fit(x_train, y_train, epochs=200, batch_size=16,
+ verbose=2, validation_split=0.5, shuffle=True)
 
 
 # 4. 평가 예측
 y_predict = model.predict([x_test])
-print('x의 예측값 : ', y_predict)
+# print('x의 예측값 : ', y_predict)
 
 loss = model.evaluate(x_test, y_test)
 print('loss : ', loss)
