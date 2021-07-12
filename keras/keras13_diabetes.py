@@ -7,6 +7,7 @@ from sklearn.datasets import load_diabetes
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
 
+# R2 0.62 이상
 # 1. data 구성
 datasets = load_diabetes()
 x = datasets.data # (442, 10)
@@ -29,25 +30,23 @@ y = datasets.target # (442,)
 #print(np.min(y), np.max(y)) # 25.0 346.0
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-      test_size=0.4, shuffle=True, random_state=66)
+      test_size=0.5, shuffle=True, random_state=66)
 
 # 2. model 구성
 model = Sequential()
-model.add(Dense(50, activation="relu" ,input_dim=10))
-model.add(Dense(20, activation="relu"))
-model.add(Dense(10, activation="relu"))
+model.add(Dense(70, activation="relu" ,input_dim=10))
+model.add(Dense(60, activation="relu"))
+model.add(Dense(50, activation="relu"))
 model.add(Dense(30, activation="relu"))
-model.add(Dense(40, activation="relu"))
-model.add(Dense(20, activation="relu"))
-model.add(Dense(10, activation="relu"))
 model.add(Dense(20, activation="relu"))
 model.add(Dense(10, activation="relu"))
 model.add(Dense(1, activation="relu"))
 
+
 # 3. 컴파일 훈련
 model.compile(loss='mse', optimizer='adam')
-model.fit(x_train, y_train, epochs=200, batch_size=16,
- verbose=2, validation_split=0.5, shuffle=True)
+model.fit(x_train, y_train, epochs=100, batch_size=8,
+ verbose=2, validation_split=0.2, shuffle=True)
 
 
 # 4. 평가 예측
@@ -59,3 +58,9 @@ print('loss : ', loss)
 
 r2 = r2_score(y_test, y_predict)
 print('R^2 score : ', r2)
+
+'''
+epo = 100
+loss :  2876.104736328125
+R^2 score :  0.5056882002869799
+'''
