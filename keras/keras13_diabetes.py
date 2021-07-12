@@ -1,5 +1,5 @@
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Activation
+from tensorflow.keras.layers import Dense
 import numpy as np
 from sklearn import datasets
 # import pandas as pd
@@ -34,13 +34,13 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
 
 # 2. model 구성
 model = Sequential()
-model.add(Dense(70, activation="relu" ,input_dim=10))
-model.add(Dense(60, activation="relu"))
-model.add(Dense(50, activation="relu"))
-model.add(Dense(30, activation="relu"))
-model.add(Dense(20, activation="relu"))
-model.add(Dense(10, activation="relu"))
-model.add(Dense(1, activation="relu"))
+model.add(Dense(70,input_dim=10))
+model.add(Dense(60))
+model.add(Dense(50))
+model.add(Dense(30))
+model.add(Dense(20))
+model.add(Dense(10))
+model.add(Dense(1))
 
 
 # 3. 컴파일 훈련

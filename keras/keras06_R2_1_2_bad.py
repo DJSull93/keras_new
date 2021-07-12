@@ -48,14 +48,14 @@ model.compile(loss='mse', optimizer='adam')
 model.fit(x_train, y_train, epochs=120, batch_size=1)
 
 # 4. 평가 예측
+y_predict = model.predict([x_test])
+print('100의 예측값 : ', y_predict)
+
 loss = model.evaluate(x_test, y_test)
 print('loss : ', loss)
 
 r2 = r2_score(y_test, y_predict)
 print('R^2 score : ', r2)
-
-y_predict = model.predict([x_test])
-print('100의 예측값 : ', y_predict)
 
 # # 5. 시각화
 # y_predict = model.predict(x)

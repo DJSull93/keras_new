@@ -63,5 +63,7 @@ print('rmse score : ', rmse)
 # plt.show()
 
 """
-
+epo = 100
+R^2 score :  0.9999999999999333
+rmse score :  7.637368694050391e-06
 """

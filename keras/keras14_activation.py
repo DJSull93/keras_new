@@ -15,23 +15,25 @@ x = datasets.data # (442, 10)
 y = datasets.target # (442,)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-      test_size=0.3, shuffle=True, random_state=66)
+      train_size=0.9, shuffle=True, random_state=10)
 
 # 2. model 구성
 # activation - relu => 활성화 함수 
 model = Sequential()
-model.add(Dense(65, activation="relu" ,input_dim=10))
-model.add(Dense(86, activation="relu"))
-model.add(Dense(105, activation="relu"))
-model.add(Dense(75, activation="relu"))
-model.add(Dense(45, activation="relu"))
+model.add(Dense(270, input_dim=(10), activation="relu"))
+model.add(Dense(240, activation="relu"))
+model.add(Dense(200, activation="relu"))
+model.add(Dense(124, activation="relu"))
+model.add(Dense(110, activation="relu"))
 model.add(Dense(1))
+
+
 
 
 # 3. 컴파일 훈련
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-model.fit(x_train, y_train, epochs=36, batch_size=16,
- verbose=2, validation_split=0.4)
+model.fit(x_train, y_train, epochs=97, batch_size=32,
+ verbose=2, validation_split=0.01)
 
 
 # 4. 평가 예측
@@ -45,7 +47,7 @@ r2 = r2_score(y_test, y_predict)
 print('R^2 score : ', r2)
 
 '''
-epo = 100
-loss :  2876.104736328125
-R^2 score :  0.5056882002869799
+epo = 99
+loss :  [2181.987060546875, 34.69679260253906]
+R^2 score :  0.6386784585388476
 '''
