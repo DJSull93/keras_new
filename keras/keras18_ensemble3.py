@@ -21,31 +21,31 @@ from tensorflow.keras.layers import Dense, Input
 
 # 2-1. model1
 input1 = Input(shape=(3,))
-dense1 = Dense(10, activation='relu', name='dense1')(input1)
-dense2 = Dense(7, activation='relu', name='dense2')(dense1)
-dense3 = Dense(5, activation='relu', name='dense3')(dense2)
-output1 = Dense(11, name='output1')(dense3)
+dense1 = Dense(200, activation='relu', name='dense1')(input1)
+dense2 = Dense(100, activation='relu', name='dense2')(dense1)
+dense3 = Dense(50, activation='relu', name='dense3')(dense2)
+output1 = Dense(10, name='output1')(dense3)
 
 # 2-2. model2
 input2 = Input(shape=(3,))
-dense11 = Dense(10, activation='relu', name='dense11')(input2)
-dense12 = Dense(10, activation='relu', name='dense12')(dense11)
-dense13 = Dense(10, activation='relu', name='dense13')(dense12)
+dense11 = Dense(200, activation='relu', name='dense11')(input2)
+dense12 = Dense(100, activation='relu', name='dense12')(dense11)
+dense13 = Dense(50, activation='relu', name='dense13')(dense12)
 dense14 = Dense(10, activation='relu', name='dense14')(dense13)
-output2 = Dense(12, name='output2')(dense14)
+output2 = Dense(5, name='output2')(dense14)
 
 # 2-3. model 1, 2 merge
 from tensorflow.keras.layers import concatenate
 
 merge1 = concatenate([output1, output2]) # merge 도 layer 임
 merge2 = Dense(10)(merge1)
-merge3 = Dense(5, activation='relu')(merge2)
+merge3 = Dense(5)(merge2)
 # last_output = Dense(1)(merge3)
 output21 = Dense(7, name='dense_a')(merge3)
 last_output1 = Dense(1, name='dense_b')(output21)
 
 output22 = Dense(8, name='dense_c')(merge3)
-last_output2 = Dense(1, name='dense_d')(output22)
+last_output2 = Dense(1, name='dense_d', activation='linear')(output22)
 
 model = Model(inputs=[input1, input2], outputs=[last_output1, last_output2])
 
@@ -63,6 +63,11 @@ model.fit([x1_train, x2_train], [y1_train, y2_train], epochs=100, batch_size=8, 
 # print("R2_1 : ", R2_1)
 
 loss = model.evaluate([x1_test, x2_test], [y1_test, y2_test])
-print('loss["mse"] : ', loss[0])
-print('loss["mae"] : ', loss[1])
-
+# print('loss["mse"] : ', loss[0])
+# print('loss["mae"] : ', loss[1])
+print('loss : ', loss)
+'''
+loss: 0.2870 - dense_b_loss: 0.0696 - dense_d_loss: 0.2175 - dense_b_mae: 0.1472 - dense_d_mae: 0.2809
+loss["mse"] :  0.28702616691589355
+loss["mae"] :  0.06955476850271225
+'''
