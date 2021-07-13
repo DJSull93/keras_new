@@ -14,17 +14,16 @@ x = datasets.data # (442, 10)
 y = datasets.target # (442,)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-      test_size=0.5, shuffle=True, random_state=66)
+      test_size=0.9, shuffle=True, random_state=10)
 
 # 2. model 구성
 input1 = Input(shape=(10,))
-dense1 = Dense(70)(input1)
-dense2 = Dense(60)(dense1)
-dense3 = Dense(50)(dense2)
-dense4 = Dense(30)(dense3)
-dense5 = Dense(20)(dense4)
-dense6 = Dense(10)(dense5)
-output1 = Dense(1)(dense6)
+dense1 = Dense(270, activation= 'relu')(input1)
+dense2 = Dense(240, activation= 'relu')(dense1)
+dense3 = Dense(200, activation= 'relu')(dense2)
+dense4 = Dense(124, activation= 'relu')(dense3)
+dense5 = Dense(110, activation= 'relu')(dense4)
+output1 = Dense(1)(dense5)
 
 model = Model(inputs=input1, outputs=output1)
 '''
@@ -39,9 +38,9 @@ model.add(Dense(1))
 '''
 
 # 3. 컴파일 훈련
-model.compile(loss='mse', optimizer='adam')
-model.fit(x_train, y_train, epochs=100, batch_size=8,
- verbose=2, validation_split=0.2, shuffle=True)
+model.compile(loss='mse', optimizer='adam', metrics=['mae'])
+model.fit(x_train, y_train, epochs=96, batch_size=32,
+ verbose=2, validation_split=0.01)
 
 
 # 4. 평가 예측
@@ -56,11 +55,11 @@ print('R^2 score : ', r2)
 
 '''
 seq
-epo = 100
-loss :  2876.104736328125
-R^2 score :  0.5056882002869799
+epo = 95 
+loss :  [2051.656982421875, 32.97710418701172]
+R^2 score :  0.6602601796180484
 mod
-epo = 100
-loss :  3053.63525390625
-R^2 score :  0.47517629853902
+epo = 96
+loss :  3519.072021484375
+R^2 score :  0.4159600447539217
 '''

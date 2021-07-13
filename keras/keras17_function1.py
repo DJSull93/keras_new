@@ -1,5 +1,5 @@
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, Activation, Input
+from tensorflow.keras.layers import Dense, Input
 import numpy as np
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
@@ -13,7 +13,7 @@ y = np.array([range(701, 801), range(101, 201)])
 y = np.transpose(y) # (100, 2)
 
 # 2. model
-
+# sequantial, model 성능은 동일, summary에서 input 명시만 차이가 있음
 input1 = Input(shape=(5,))
 dense1 = Dense(3)(input1)
 dense2 = Dense(4)(dense1)

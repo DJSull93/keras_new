@@ -53,10 +53,14 @@ r2 = r2_score(y_test, y_predict)
 print('R^2 score : ', r2)
 
 '''
+sqe
 epo = 5000
 loss :  0.3800278306007385
 R^2 score :  0.809986093514469
-
+mod
+epo = 500
+loss :  0.9698692560195923
+R^2 score :  0.5689470073806938
 '''
 
 # 06_R2_2 copy

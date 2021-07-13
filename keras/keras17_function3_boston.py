@@ -65,8 +65,11 @@ r2 = r2_score(y_test, y_predict)
 print('R^2 score : ', r2)
 '''
 seq
-epo = 100
+epo, batch = 100, 1
 loss :  21.215435028076172
 R^2 score :  0.7432077221153058
-
+model 
+epo, batch = 100, 32
+loss :  52.22905349731445
+R^2 score :  0.3608020825496324
 '''
