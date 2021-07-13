@@ -32,7 +32,7 @@ model.add(Dense(1))
 
 # 3. 컴파일 훈련
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-model.fit(x_train, y_train, epochs=97, batch_size=32,
+model.fit(x_train, y_train, epochs=96, batch_size=32,
  verbose=2, validation_split=0.01)
 
 
@@ -50,4 +50,8 @@ print('R^2 score : ', r2)
 epo = 97
 loss :  [2088.807373046875, 33.21739959716797]
 R^2 score :  0.6541083487898958
+epo = 95 
+loss :  [2051.656982421875, 32.97710418701172]
+R^2 score :  0.6602601796180484
+
 '''
