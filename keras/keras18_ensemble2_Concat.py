@@ -35,9 +35,9 @@ output2 = Dense(12, name='output2')(dense14)
 
 # 2-3. model 1, 2 merge
 # concatenate 소문자 메소드 대문자 클래스 차이 없음, 버전에 따른 흔적임
-from tensorflow.keras.layers import concatenate
+from tensorflow.keras.layers import Concatenate
 
-merge1 = concatenate([output1, output2]) # merge 도 layer 임
+merge1 = Concatenate(axis=1)([output1, output2]) # merge 도 layer 임
 merge2 = Dense(10)(merge1)
 merge3 = Dense(5, activation='relu')(merge2)
 last_output = Dense(1)(merge3)
