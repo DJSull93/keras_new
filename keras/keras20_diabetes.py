@@ -16,7 +16,7 @@ x = datasets.data # (442, 10)
 y = datasets.target # (442,)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-      test_size=0.25, shuffle=True, random_state=66)
+      test_size=0.25, shuffle=True, random_state=9)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 scaler = MinMaxScaler()
@@ -52,10 +52,10 @@ print('R^2 score : ', r2)
 '''
 epo, batch = 200, 32
 $ MinMaxScaler
-loss :  3209.69189453125
-R^2 score :  0.5146631135277138
+loss :  2289.67333984375
+R^2 score :  0.6031454895718897
 
 $ StandardScaler
-loss :  3353.529052734375
-R^2 score :  0.49291361767537734
+loss :  2448.52978515625
+R^2 score :  0.5756118781244629
 '''

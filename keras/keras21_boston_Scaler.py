@@ -60,19 +60,19 @@ $ StandardScaler
 loss :  6.393800258636475
 R^2 score :  0.9348129216145945
 
-$ RobustScaler
-loss :  9.409444808959961
-R^2 score :  0.8868064747537897
-
 $ MaxAbsScaler
 loss :  7.375861167907715
 R^2 score :  0.9112700225293082
 
-$ QuantileTransformer
-loss :  10.57460880279541
-R^2 score :  0.8727898147822734
+$ RobustScaler
+loss :  9.409444808959961
+R^2 score :  0.8868064747537897
 
 $ PowerTransformer
 loss :  10.439437866210938
 R^2 score :  0.8744158791547259
+
+$ QuantileTransformer
+loss :  10.57460880279541
+R^2 score :  0.8727898147822734
 '''

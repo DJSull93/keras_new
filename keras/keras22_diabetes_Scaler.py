@@ -17,10 +17,10 @@ x = datasets.data # (442, 10)
 y = datasets.target # (442,)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-      test_size=0.25, shuffle=True, random_state=66)
+      test_size=0.25, shuffle=True, random_state=9)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
-scaler = PowerTransformer()
+scaler = StandardScaler()
 scaler.fit(x_train) 
 x_train = scaler.transform(x_train) 
 x_test = scaler.transform(x_test) 
@@ -52,27 +52,27 @@ print('R^2 score : ', r2)
 
 '''
 epo, batch, run = 200, 32, 2
-$ StandardScaler
-loss :  3353.529052734375
-R^2 score :  0.49291361767537734
+$ MaxAbsScaler
+loss :  2247.06396484375
+R^2 score :  0.6105307266558146
 
 $ MinMaxScaler
-loss :  3209.69189453125
-R^2 score :  0.5146631135277138
+loss :  2289.67333984375
+R^2 score :  0.6031454895718897
+
+$ StandardScaler
+loss :  2448.52978515625
+R^2 score :  0.5756118781244629
 
 $ RobustScaler
-loss :  3356.51220703125
-R^2 score :  0.49246252387766065
-
-$ MaxAbsScaler
-loss :  3321.856689453125
-R^2 score :  0.4977027649589938
+loss :  2449.67822265625
+R^2 score :  0.5754128617461862
 
 $ QuantileTransformer
-loss :  3428.969970703125
-R^2 score :  0.48150619176236975
+loss :  2584.061767578125
+R^2 score :  0.5521210455004621
 
 $ PowerTransformer
-loss :  3475.009521484375
-R^2 score :  0.47454454991407824
+loss :  2604.87060546875
+R^2 score :  0.5485143489147741
 '''
