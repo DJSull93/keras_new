@@ -20,7 +20,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
       test_size=0.25, shuffle=True, random_state=9)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
-scaler = StandardScaler()
+scaler = MinMaxScaler()
 scaler.fit(x_train) 
 x_train = scaler.transform(x_train) 
 x_test = scaler.transform(x_test) 
@@ -51,7 +51,7 @@ r2 = r2_score(y_test, y_predict)
 print('R^2 score : ', r2)
 
 '''
-epo, batch, run = 200, 32, 2
+epo, batch, run, random = 200, 32, 2, 9
 $ MaxAbsScaler
 loss :  2247.06396484375
 R^2 score :  0.6105307266558146

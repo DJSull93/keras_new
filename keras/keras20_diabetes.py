@@ -50,7 +50,7 @@ r2 = r2_score(y_test, y_predict)
 print('R^2 score : ', r2)
 
 '''
-epo, batch = 200, 32
+epo, batch, run, random = 200, 32, 2, 9
 $ MinMaxScaler
 loss :  2289.67333984375
 R^2 score :  0.6031454895718897
