@@ -63,6 +63,7 @@ r2 = r2_score(y_test, y_predict)
 print('R^2 score : ', r2)
 
 '''
+MinMax before set train test
 epo = 1000 
 loss :  4.442183971405029
 R^2 score :  0.9547103416059415

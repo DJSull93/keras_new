@@ -1,4 +1,5 @@
 # boston housing minmax
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import numpy as np
@@ -21,10 +22,11 @@ y = datasets.target # (506,) output_dim = 1
 x_train, x_test, y_train, y_test = train_test_split(x, y,
       test_size=0.1, shuffle=True, random_state=12)
 
-# x_train에 대해 fit 한 scaler를 x_test에 적용
-# 컬럼별 minmax -> sklearn.preproccessing
-from sklearn.preprocessing import MinMaxScaler
-scaler = MinMaxScaler()
+# minmaxscaler -> data 쏠려 있을 때 좋은 지표가 될 수 없음
+# >> StandardScaler 사용
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+# scaler = MinMaxScaler()
+scaler = StandardScaler()
 scaler.fit(x_train) 
 x_train = scaler.transform(x_train) 
 x_test = scaler.transform(x_test) 
@@ -64,8 +66,8 @@ r2 = r2_score(y_test, y_predict)
 print('R^2 score : ', r2)
 
 '''
-MinMax Scaler
+Standard Scaler
 epo = 1000 
-loss :  4.89172887802124
-R^2 score :  0.9501270749506096
+loss :  6.393800258636475
+R^2 score :  0.9348129216145945
 '''
