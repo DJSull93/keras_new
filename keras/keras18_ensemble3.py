@@ -66,6 +66,7 @@ loss = model.evaluate([x1_test, x2_test], [y1_test, y2_test])
 # print('loss["mse"] : ', loss[0])
 # print('loss["mae"] : ', loss[1])
 print('loss : ', loss)
+
 '''
 loss: 0.2870 - dense_b_loss: 0.0696 - dense_d_loss: 0.2175 - dense_b_mae: 0.1472 - dense_d_mae: 0.2809
 loss["mse"] :  0.28702616691589355

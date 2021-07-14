@@ -27,14 +27,10 @@ model.add(Dense(124, activation="relu"))
 model.add(Dense(110, activation="relu"))
 model.add(Dense(1))
 
-
-
-
 # 3. 컴파일 훈련
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 model.fit(x_train, y_train, epochs=96, batch_size=32,
  verbose=2, validation_split=0.01)
-
 
 # 4. 평가 예측
 y_predict = model.predict([x_test])

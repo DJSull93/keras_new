@@ -47,7 +47,6 @@ print(x_train, x_val, x_test)
 # result = model.predict([11])
 # print('11의 예측값 : ', result)
 
-
 # 5. 시각화
 # y_predict = model.predict(x)
 # plt.scatter(x,y)

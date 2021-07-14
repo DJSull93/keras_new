@@ -2,6 +2,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 import numpy as np
 
+# single model에서 분기, 두 모델로 연산 
 # 1. data
 # x1 기상청 (온도, 습도, 불쾌지수), x2 주가 (삼전, SK, Kakao)
 
@@ -71,5 +72,7 @@ print('loss["mae"] : ', loss[1])
 # print('loss : ', loss)
 
 '''
-
+loss: 0.0408 - dense_b_loss: 0.0157 - dense_d_loss: 0.0251 - dense_b_mae: 0.1081 - dense_d_mae: 0.1138
+loss["mse"] :  0.04079199582338333
+loss["mae"] :  0.01565927267074585
 '''
