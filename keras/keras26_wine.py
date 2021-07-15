@@ -28,10 +28,10 @@ y = to_categorical(y)
 # print(y.shape)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-      test_size=0.1, shuffle=True, random_state=1)
+      test_size=0.2, shuffle=True, random_state=1)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
-scaler = MinMaxScaler()
+scaler = QuantileTransformer()
 scaler.fit(x_train) 
 x_train = scaler.transform(x_train) 
 x_test = scaler.transform(x_test) 
@@ -72,6 +72,7 @@ print(y_predict)
 
 
 '''
+test size = 0.1
 quanile
 Epoch 01673: early stopping
 loss[binary] :  2.0449801013455726e-05
@@ -102,3 +103,37 @@ loss[accuracy] :  1.0
  [1.0897119e-10 1.0000000e+00 1.1662272e-12]
  [1.0000000e+00 1.5750894e-10 1.5820854e-08]]
 '''
+'''
+test size = 0.2
+QuantileTransformer
+Epoch 00880: early stopping
+loss[binary] :  0.0029777565505355597
+loss[accuracy] :  1.0
+[[0. 0. 1.]
+ [0. 1. 0.]
+ [1. 0. 0.]
+ [0. 1. 0.]
+ [1. 0. 0.]]
+[[3.45059137e-09 1.53771648e-10 1.00000000e+00]
+ [1.11740464e-13 1.00000000e+00 1.63463874e-13]
+ [1.00000000e+00 1.83690641e-13 2.81967921e-11]
+ [7.03233516e-09 1.00000000e+00 2.05429992e-10]
+ [1.00000000e+00 5.20571948e-14 2.39953439e-11]]
+
+MinMaxScaler
+Epoch 01231: early stopping
+loss[binary] :  0.03374214842915535
+loss[accuracy] :  0.9722222089767456
+[[0. 0. 1.]
+ [0. 1. 0.]
+ [1. 0. 0.]
+ [0. 1. 0.]
+ [1. 0. 0.]]
+[[7.4443946e-08 1.6727853e-06 9.9999821e-01]
+ [8.0170752e-11 1.0000000e+00 2.7280180e-13]
+ [1.0000000e+00 1.3937996e-18 2.0273587e-11]
+ [3.5023309e-09 1.0000000e+00 1.1602218e-11]
+ [1.0000000e+00 1.0965372e-19 2.6145601e-11]]
+'''
+
+# 0714 과제 내용 처럼 Qiantile Transformer 사용이 적합함
