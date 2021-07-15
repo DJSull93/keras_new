@@ -1,3 +1,9 @@
+# cancer 예제 / y -> 0, 1 이진분류 
+
+# 이진분류 데이터에 대해서는 다음이 강제됨
+# output activation = sigmoid
+# loss = binary_crossentropy
+
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Input
 import numpy as np
@@ -22,28 +28,30 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
       test_size=0.25, shuffle=True, random_state=66)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
-scaler = MinMaxScaler()
+scaler = QuantileTransformer()
 scaler.fit(x_train) 
 x_train = scaler.transform(x_train) 
 x_test = scaler.transform(x_test) 
 
 # 2. model 구성
+# 결과가 0, 이므로 새로운 activation(활성화) func. -> sigmoid 사용
 model = Sequential()
 model.add(Dense(270, input_dim=(30), activation="relu"))
 model.add(Dense(240, activation="relu"))
 model.add(Dense(200, activation="relu"))
 model.add(Dense(124, activation="relu"))
 model.add(Dense(100, activation="relu"))
-model.add(Dense(1))
+model.add(Dense(1, activation="sigmoid"))
 
 # 3. 컴파일 훈련
-model.compile(loss='mse', optimizer='adam')
+# data 형태가 다르므로 mse 대신 binary_crossentropy 사용
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['mse', 'accuracy'])
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
+es = EarlyStopping(monitor='loss', patience=20, mode='min', verbose=1)
 
-model.fit(x_train, y_train, epochs=1000, batch_size=32, verbose=2,
-    validation_split=0.015, callbacks=[es]  )
+model.fit(x_train, y_train, epochs=10000, batch_size=32, verbose=2,
+    validation_split=0.1, callbacks=[es])
 
 
 # 4. 평가 예측
@@ -51,7 +59,32 @@ y_predict = model.predict([x_test])
 # print('x의 예측값 : ', y_predict)
 
 loss = model.evaluate(x_test, y_test)
-print('loss : ', loss)
+print('loss[binary] : ', loss[0])
+print('loss[mse] : ', loss[1])
+print('loss[accuracy] : ', loss[2])
 
 # r2 = r2_score(y_test, y_predict)
 # print('R^2 score : ', r2)
+
+'''
+using linear
+power
+loss :  0.020754193887114525
+R^2 score :  0.9095476332529246
+using sigmoid
+quantile
+loss :  0.5398237705230713
+Sequential
+loss :  0.5177478790283203
+loss :  0.2344427853822708
+
+using accuracy in metrics
+Sequential
+loss[binary] :  0.4892100393772125
+loss[mse] :  0.039307378232479095
+loss[accuracy] :  0.9590643048286438
+
+loss[binary] :  0.44642624258995056
+loss[mse] :  0.03315227851271629
+loss[accuracy] :  0.9650349617004395
+'''

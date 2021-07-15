@@ -79,7 +79,8 @@ print('R^2 score : ', r2)
 
 # plot 
 import matplotlib.pyplot as plt 
-from matplotlib import font_manager, rc
+
+plt.rc('font', family='GULIM') # For Windows
 
 plt.plot(hist.history['loss'], color='red') # x = epoch, y = hist['loss']
 plt.plot(hist.history['val_loss'], color='blue')
@@ -91,6 +92,6 @@ plt.show()
 
 '''
 2/2 [==============================] - 0s 997us/step - loss: 8.3174
-loss :  8.317400932312012
-R^2 score :  0.9152011176086197
+loss :  5.748440742492676
+R^2 score :  0.941392596421068
 '''
