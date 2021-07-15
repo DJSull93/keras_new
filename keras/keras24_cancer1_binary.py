@@ -51,7 +51,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='loss', patience=20, mode='min', verbose=1)
 
 model.fit(x_train, y_train, epochs=10000, batch_size=32, verbose=2,
-    validation_split=0.1, callbacks=[es])
+    validation_split=0.2, callbacks=[es])
 
 
 # 4. 평가 예측
@@ -60,7 +60,6 @@ y_predict = model.predict([x_test])
 
 loss = model.evaluate(x_test, y_test)
 print('loss[binary] : ', loss[0])
-print('loss[mse] : ', loss[1])
 print('loss[accuracy] : ', loss[2])
 
 # r2 = r2_score(y_test, y_predict)
@@ -81,10 +80,12 @@ loss :  0.2344427853822708
 using accuracy in metrics
 Sequential
 loss[binary] :  0.4892100393772125
-loss[mse] :  0.039307378232479095
 loss[accuracy] :  0.9590643048286438
 
 loss[binary] :  0.44642624258995056
-loss[mse] :  0.03315227851271629
 loss[accuracy] :  0.9650349617004395
+
+QuantileTransformer val 0.2
+loss[binary] :  0.3074130117893219
+loss[accuracy] :  0.9720279574394226
 '''
