@@ -55,15 +55,20 @@ model.fit(x_train, y_train, epochs=10000, batch_size=32, verbose=2,
 
 
 # 4. 평가 예측
-y_predict = model.predict([x_test])
+# y_predict = model.predict([x_test])
 # print('x의 예측값 : ', y_predict)
+# r2 = r2_score(y_test, y_predict)
+# print('R^2 score : ', r2)
 
 loss = model.evaluate(x_test, y_test)
 print('loss[binary] : ', loss[0])
 print('loss[accuracy] : ', loss[2])
 
-# r2 = r2_score(y_test, y_predict)
-# print('R^2 score : ', r2)
+# original
+print(y_test[-5:-1])
+# after softmax
+y_predict = model.predict(x_test[-5:-1])
+print(y_predict)
 
 '''
 using linear
@@ -89,3 +94,12 @@ QuantileTransformer val 0.2
 loss[binary] :  0.3074130117893219
 loss[accuracy] :  0.9720279574394226
 '''
+''' 
+origin
+[1 1 0 1]
+adfter signoid 
+[[9.8342741e-01]
+ [1.0000000e+00]
+ [2.0116324e-14]
+ [1.0000000e+00]]
+ '''

@@ -80,7 +80,8 @@ print('R^2 score : ', r2)
 # plot 
 import matplotlib.pyplot as plt 
 
-plt.rc('font', family='GULIM') # For Windows
+# 과제 내용 -> 한글 폰트 깨짐 해결
+plt.rc('font', family='GULIM')
 
 plt.plot(hist.history['loss'], color='red') # x = epoch, y = hist['loss']
 plt.plot(hist.history['val_loss'], color='blue')

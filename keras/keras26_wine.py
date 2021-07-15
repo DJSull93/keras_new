@@ -1,35 +1,24 @@
-# iris 국화 예제 / 다중분류 / 변수에따른 종류
-
-# labeling - indcoding 필요 
-# 0, 1, 2 라벨 수 끼리의 관계가 동일해야 함
-# scalar -> vector : ex) 0 = (1,0,0) 1=(0,1,0) 2=(0,0,1) 
-
-# indcoding ex)
-# [1, 2, 0, 1] (4, ) 
-# [0,1,0]
-# [0,0,1]
-# [1,0,0]
-# [0,1,0] -> (4, 3)
-
-# 다중분류 데이터에 대해서는 다음이 강제됨
-# output activation = softmax
-# loss = categorical_crossentropy
+# wine 예제
+# acc 0.8 이상 만들 것
 
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Input
 import numpy as np
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_wine
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
 
+
 # 1. data
-datasets = load_iris()
+datasets = load_wine()
 
-# print(datasets.DESCR)
-# print(datasets.feature_names) # ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']     
+print(datasets.DESCR)
+print(datasets.feature_names) # ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']     
 
-x = datasets.data # (150, 4)
-y = datasets.target # (150, ) - incoding-> (150,3)
+x = datasets.data # (178, 13)
+y = datasets.target # (178, ) - incoding-> (178,3)
+
+# print(x.shape, y.shape)
 
 # incoding -> One_Hot_Incoding 
 from tensorflow.keras.utils import to_categorical
@@ -42,15 +31,14 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
       test_size=0.1, shuffle=True, random_state=1)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
-scaler = QuantileTransformer()
+scaler = MinMaxScaler()
 scaler.fit(x_train) 
 x_train = scaler.transform(x_train) 
 x_test = scaler.transform(x_test) 
 
 # 2. model 구성
-# 결과가 0, 이므로 새로운 activation(활성화) func. -> sigmoid 사용
 model = Sequential()
-model.add(Dense(270, input_dim=(4), activation="relu"))
+model.add(Dense(270, input_dim=(13), activation="relu"))
 model.add(Dense(240, activation="relu"))
 model.add(Dense(200, activation="relu"))
 model.add(Dense(124, activation="relu"))
@@ -58,7 +46,6 @@ model.add(Dense(100, activation="relu"))
 model.add(Dense(3, activation="softmax"))
 
 # 3. 컴파일 훈련
-# data 형태가 다르므로 mse 대신 categorical_crossentropy 사용
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['mse', 'accuracy'])
 
 from tensorflow.keras.callbacks import EarlyStopping
@@ -83,25 +70,35 @@ print(y_test[:5])
 y_predict = model.predict(x_test[:5])
 print(y_predict)
 
+
 '''
-QuantileTransformer
-Epoch 01330: early stopping
-loss[binary] :  1.7642857983446447e-06
+quanile
+Epoch 01673: early stopping
+loss[binary] :  2.0449801013455726e-05
 loss[accuracy] :  1.0
-
-loss[binary] :  0.00010815416317200288
-loss[accuracy] :  1.0
-
-y_test[:5] =
-[[1. 0. 0.]
- [0. 1. 0.]
+[[0. 0. 1.]
  [0. 1. 0.]
  [1. 0. 0.]
- [0. 0. 1.]]
-y_predict[:5] =
-[[9.99999762e-01 1.79692137e-07 5.77463733e-29]
- [2.22764589e-04 9.99777138e-01 1.69286594e-07]
- [7.09510815e-08 9.99999881e-01 6.74925046e-11]
- [9.99999762e-01 2.95443215e-07 1.23214999e-27]
- [1.11267174e-17 5.99346473e-04 9.99400616e-01]]
+ [0. 1. 0.]
+ [1. 0. 0.]]
+[[7.0223860e-10 2.0880429e-11 1.0000000e+00]
+ [5.9794682e-12 1.0000000e+00 6.5260731e-14]
+ [1.0000000e+00 1.0158904e-09 6.3176109e-09]
+ [8.5711171e-10 1.0000000e+00 2.5768632e-12]
+ [1.0000000e+00 2.8179817e-10 1.8027558e-09]]
+
+MinMaxScaler
+Epoch 01392: early stopping
+loss[binary] :  7.768218893033918e-06
+loss[accuracy] :  1.0
+[[0. 0. 1.]
+ [0. 1. 0.]
+ [1. 0. 0.]
+ [0. 1. 0.]
+ [1. 0. 0.]]
+[[5.0608018e-11 4.0945514e-10 1.0000000e+00]
+ [3.9799188e-12 1.0000000e+00 6.5529434e-13]
+ [1.0000000e+00 7.3859324e-10 7.1088273e-09]
+ [1.0897119e-10 1.0000000e+00 1.1662272e-12]
+ [1.0000000e+00 1.5750894e-10 1.5820854e-08]]
 '''
