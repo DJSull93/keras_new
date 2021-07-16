@@ -29,13 +29,11 @@ from tensorflow.python.keras.layers.core import Flatten
 
 
 model = Sequential()
-model.add(Conv2D(filters=30, kernel_size=(2, 2),                          
+model.add(Conv2D(filters=30, kernel_size=(4, 4),                          
                         padding='same' ,input_shape=(28, 28, 1))) 
-model.add(Conv2D(20, (2,2), activation='relu'))                   
-model.add(Conv2D(10, (2,2), activation='relu'))  
+model.add(Conv2D(16, (4,4), padding='same', activation='relu'))                   
 model.add(MaxPool2D())                                            
-model.add(Conv2D(15, (2,2)))    
-model.add(MaxPool2D())                                            
+model.add(Conv2D(8, (4,4), padding='same', activation='relu'))    
 model.add(Flatten())                                              
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
@@ -46,10 +44,10 @@ model.add(Dense(10, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['mse', 'accuracy'])
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=10, mode='min', verbose=1)
 
-model.fit(x_train, y_train, epochs=10000, batch_size=1152, verbose=2,
-    validation_split=0.0015, callbacks=[es])
+model.fit(x_train, y_train, epochs=10000, batch_size=576, verbose=2,
+    validation_split=0.0005, callbacks=[es])
 
 # 4. predict eval -> no need to
 
@@ -63,4 +61,13 @@ loss[accuracy] :  0.9883999824523926
 
 loss[category] :  0.06967199593782425
 loss[accuracy] :  0.9894000291824341
+
+loss[category] :  0.0706218034029007
+loss[accuracy] :  0.9886000156402588
+
+loss[category] :  0.06398986279964447
+loss[accuracy] :  0.989300012588501
+
+loss[category] :  0.056856293231248856
+loss[accuracy] :  0.9918000102043152
 '''
