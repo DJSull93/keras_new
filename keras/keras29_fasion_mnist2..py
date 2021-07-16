@@ -1,14 +1,14 @@
-# mnist example 
-# acc upper than 0.98 
+# example fasion_mnist  
+# make perfect model 
 
 import numpy as np
 import matplotlib.pyplot as plt
-from tensorflow.keras.datasets import mnist
+from tensorflow.keras.datasets import fashion_mnist
 from icecream import ic
 
 # 1. data
-# y = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-(x_train, y_train), (x_test, y_test) = mnist.load_data() # (60000, 28, 28) (60000,) (10000, 28, 28) (10000,)
+# y = ]
+(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data() # (60000, 28, 28) (60000,) (10000, 28, 28) (10000,)
 
 x_train = x_train.reshape(60000, 28, 28, 1)/255. # (60000, 28, 28, 1)
 x_test = x_test.reshape(10000, 28, 28, 1)/255. # (10000, 28, 28, 1)
@@ -57,27 +57,6 @@ print('loss[category] : ', loss[0])
 print('loss[accuracy] : ', loss[2])
 
 '''
-loss[category] :  0.06172657012939453
-loss[accuracy] :  0.9883999824523926
-
-loss[category] :  0.06967199593782425
-loss[accuracy] :  0.9894000291824341
-
-loss[category] :  0.0706218034029007
-loss[accuracy] :  0.9886000156402588
-
-loss[category] :  0.06398986279964447
-loss[accuracy] :  0.989300012588501
-
-loss[category] :  0.056856293231248856
-loss[accuracy] :  0.9918000102043152
-
-loss[category] :  0.04294644296169281
-loss[accuracy] :  0.9919999837875366
-
-loss[category] :  0.057616908103227615
-loss[accuracy] :  0.9922000169754028
-
-loss[category] :  0.04006421938538551
-loss[accuracy] :  0.994700014591217
+loss[category] :  0.4134199619293213
+loss[accuracy] :  0.923799991607666
 '''
