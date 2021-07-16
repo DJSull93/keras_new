@@ -61,7 +61,7 @@ model.fit(x_train, y_train, epochs=10000, batch_size=32, verbose=2,
 # print('R^2 score : ', r2)
 
 loss = model.evaluate(x_test, y_test)
-print('loss[binary] : ', loss[0])
+print('loss[category] : ', loss[0])
 print('loss[accuracy] : ', loss[2])
 
 # original
@@ -75,7 +75,7 @@ print(y_predict)
 test size = 0.1
 quanile
 Epoch 01673: early stopping
-loss[binary] :  2.0449801013455726e-05
+loss[category] :  2.0449801013455726e-05
 loss[accuracy] :  1.0
 [[0. 0. 1.]
  [0. 1. 0.]
@@ -90,7 +90,7 @@ loss[accuracy] :  1.0
 
 MinMaxScaler
 Epoch 01392: early stopping
-loss[binary] :  7.768218893033918e-06
+loss[category] :  7.768218893033918e-06
 loss[accuracy] :  1.0
 [[0. 0. 1.]
  [0. 1. 0.]
@@ -107,7 +107,7 @@ loss[accuracy] :  1.0
 test size = 0.2
 QuantileTransformer
 Epoch 00880: early stopping
-loss[binary] :  0.0029777565505355597
+loss[category] :  0.0029777565505355597
 loss[accuracy] :  1.0
 [[0. 0. 1.]
  [0. 1. 0.]
@@ -122,7 +122,7 @@ loss[accuracy] :  1.0
 
 MinMaxScaler
 Epoch 01231: early stopping
-loss[binary] :  0.03374214842915535
+loss[category] :  0.03374214842915535
 loss[accuracy] :  0.9722222089767456
 [[0. 0. 1.]
  [0. 1. 0.]

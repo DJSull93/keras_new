@@ -57,10 +57,10 @@ model.add(Dense(7, activation="softmax"))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['mse', 'accuracy'])
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', patience=240, mode='min', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
 
 model.fit(x_train, y_train, epochs=10000, batch_size=64, verbose=2,
-    validation_split=0.002, callbacks=[es])
+    validation_split=0.0024, callbacks=[es])
 
 # 4. 평가 예측
 # y_predict = model.predict([x_test])
@@ -80,6 +80,7 @@ print('loss[accuracy] : ', loss[2])
 
 
 '''
+patience 240
 quantile
 loss[category] :  2.3964686393737793
 loss[accuracy] :  0.6432653069496155
@@ -106,6 +107,10 @@ loss[accuracy] :  0.7599999904632568
 
 loss[category] :  1.5601791143417358
 loss[accuracy] :  0.800000011920929
+
+patience, val = 20, 0.0024
+loss[category] :  0.6754863858222961
+loss[accuracy] :  0.8399999737739563
 '''
 
 # dataset 라벨 , 셋 자체에 대한 처리로 정확도 올릴 수 있음 
