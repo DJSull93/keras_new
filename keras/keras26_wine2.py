@@ -100,7 +100,12 @@ loss[accuracy] :  0.7200000286102295
 loss[category] :  2.6221673488616943
 loss[accuracy] :  0.7200000286102295
 
-randomstate = 24
+robust, randomstate = 24
 loss[category] :  1.750553011894226
 loss[accuracy] :  0.7599999904632568
+
+loss[category] :  1.5601791143417358
+loss[accuracy] :  0.800000011920929
 '''
+
+# dataset 라벨 , 셋 자체에 대한 처리로 정확도 올릴 수 있음 
