@@ -28,11 +28,15 @@ y = datasets.iloc[:,[11]] # (4898, 10)
 # print(np.unique(y))
 
 # incoding -> One_Hot_Incoding 
-from tensorflow.keras.utils import to_categorical
-y = to_categorical(y)
+# to_categorical 0, 1, 2 없으나 자동 생성
+# -> keras OneHotencoder 사용
+from sklearn.preprocessing import OneHotEncoder
+one = OneHotEncoder()
+one.fit(y)
+y = one.transform(y).toarray()
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-      test_size=0.25, shuffle=True, random_state=66)
+      test_size=0.005, shuffle=True, random_state=24)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
 scaler = RobustScaler()
@@ -42,21 +46,21 @@ x_test = scaler.transform(x_test)
 
 # 2. model 구성
 model = Sequential()
-model.add(Dense(270, input_dim=(11), activation="relu"))
+model.add(Dense(240, input_dim=(11), activation="relu"))
 model.add(Dense(240, activation="relu"))
 model.add(Dense(200, activation="relu"))
 model.add(Dense(124, activation="relu"))
-model.add(Dense(100, activation="relu"))
-model.add(Dense(10, activation="softmax"))
+model.add(Dense(60, activation="relu"))
+model.add(Dense(7, activation="softmax"))
 
 # 3. 컴파일 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['mse', 'accuracy'])
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', patience=30, mode='min', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=240, mode='min', verbose=1)
 
 model.fit(x_train, y_train, epochs=10000, batch_size=64, verbose=2,
-    validation_split=0.12, callbacks=[es])
+    validation_split=0.002, callbacks=[es])
 
 # 4. 평가 예측
 # y_predict = model.predict([x_test])
@@ -74,9 +78,29 @@ print('loss[accuracy] : ', loss[2])
 # y_predict = model.predict(x_test[:5])
 # print(y_predict)
 
+
 '''
+quantile
 loss[category] :  2.3964686393737793
 loss[accuracy] :  0.6432653069496155
 
+robust
+loss[category] :  1.6828268766403198
+loss[accuracy] :  0.6653061509132385
 
+loss[category] :  2.300713062286377
+loss[accuracy] :  0.6938775777816772
+
+loss[category] :  3.029759168624878
+loss[accuracy] :  0.7162162065505981
+
+loss[category] :  3.742452383041382
+loss[accuracy] :  0.7200000286102295
+
+loss[category] :  2.6221673488616943
+loss[accuracy] :  0.7200000286102295
+
+randomstate = 24
+loss[category] :  1.750553011894226
+loss[accuracy] :  0.7599999904632568
 '''
