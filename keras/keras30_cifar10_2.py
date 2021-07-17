@@ -45,17 +45,17 @@ model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
 model.add(Flatten())                                              
 model.add(Dense(128, activation='relu'))
 # model.add(Dense(124, activation='relu'))
-# model.add(Dense(84, activation='relu'))
-model.add(Dense(100, activation='softmax'))
+model.add(Dense(84, activation='relu'))
+model.add(Dense(10, activation='softmax'))
 
 # 3. comple fit // metrics 'acc'
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['mse', 'accuracy'])
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', patience=15, mode='min', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
 
 model.fit(x_train, y_train, epochs=10000, batch_size=576, verbose=2,
-    validation_split=0.002, callbacks=[es])
+    validation_split=0.0012, callbacks=[es])
 
 # 4. predict eval -> no need to
 
@@ -66,4 +66,7 @@ print('loss[accuracy] : ', loss[2])
 '''
 loss[category] :  2.1953704357147217
 loss[accuracy] :  0.6863999962806702
+
+loss[category] :  1.6478464603424072
+loss[accuracy] :  0.7605000138282776
 '''

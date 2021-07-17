@@ -55,7 +55,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_loss', patience=15, mode='min', verbose=1)
 
 model.fit(x_train, y_train, epochs=10000, batch_size=512, verbose=2,
-    validation_split=0.002, callbacks=[es])
+    validation_split=0.00005, callbacks=[es])
 
 # 4. predict eval -> no need to
 
@@ -66,4 +66,7 @@ print('loss[accuracy] : ', loss[2])
 '''
 loss[category] :  3.743717908859253
 loss[accuracy] :  0.3472000062465668
+
+loss[category] :  6.727427959442139
+loss[accuracy] :  0.3682999908924103
 '''
