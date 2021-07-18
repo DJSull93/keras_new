@@ -40,10 +40,10 @@ model.add(MaxPool2D())
 model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))                   
 model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))    
 model.add(MaxPool2D())                                         
-model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))                   
-model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
+# model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))                   
+# model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
 model.add(Flatten())                                              
-model.add(Dense(128, activation='relu'))
+model.add(Dense(512, activation='relu'))
 # model.add(Dense(124, activation='relu'))
 # model.add(Dense(84, activation='relu'))
 model.add(Dense(100, activation='softmax'))
@@ -52,10 +52,10 @@ model.add(Dense(100, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['mse', 'accuracy'])
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', patience=15, mode='min', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=30, mode='min', verbose=1)
 
-model.fit(x_train, y_train, epochs=10000, batch_size=512, verbose=2,
-    validation_split=0.00005, callbacks=[es])
+model.fit(x_train, y_train, epochs=10000, batch_size=1024, verbose=2,
+    validation_split=0.0007, callbacks=[es])
 
 # 4. predict eval -> no need to
 
@@ -64,9 +64,12 @@ print('loss[category] : ', loss[0])
 print('loss[accuracy] : ', loss[2])
 
 '''
-loss[category] :  3.743717908859253
-loss[accuracy] :  0.3472000062465668
-
 loss[category] :  6.727427959442139
 loss[accuracy] :  0.3682999908924103
+
+loss[category] :  7.6312689781188965
+loss[accuracy] :  0.37220001220703125
+
+loss[category] :  6.800853729248047
+loss[accuracy] :  0.3847000002861023
 '''
