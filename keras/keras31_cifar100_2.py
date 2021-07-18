@@ -38,8 +38,8 @@ model.add(MaxPool2D())
 model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))                   
 model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))    
 model.add(MaxPool2D())                                         
-model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))                   
-model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
+model.add(Conv2D(128, (4, 4), activation='relu'))                   
+model.add(Conv2D(128, (4, 4), activation='relu'))
 model.add(Flatten())                                              
 model.add(Dense(1024, activation='relu'))
 model.add(Dense(512, activation='relu'))
@@ -76,4 +76,7 @@ loss[accuracy] :  0.3855000138282776
 
 loss[category] :  6.220393180847168
 loss[accuracy] :  0.4025000035762787
+
+loss[category] :  4.9466118812561035
+loss[accuracy] :  0.4169999957084656
 '''
