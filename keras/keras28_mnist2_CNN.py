@@ -14,7 +14,7 @@ x_train = x_train.reshape(60000, 28*28*1)
 x_test = x_test.reshape(10000, 28*28*1)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
-scaler = RobustScaler()
+scaler = MinMaxScaler()
 # scaler.fit(x_train) 
 # x_train = scaler.transform(x_train) 
 x_train = scaler.fit_transform(x_train)
@@ -31,12 +31,10 @@ one.fit(y_train)
 y_train = one.transform(y_train).toarray() # (60000, 10)
 y_test = one.transform(y_test).toarray() # (10000, 10)
 
-
 # 2. model
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D
 from tensorflow.python.keras.layers.core import Flatten
-
 
 model = Sequential()
 model.add(Conv2D(filters=32, kernel_size=(5, 5),                          
@@ -52,19 +50,24 @@ model.add(Dense(84, activation='relu'))
 model.add(Dense(10, activation='softmax'))
 
 # 3. comple fit // metrics 'acc'
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['mse', 'accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='accuracy')
 
 from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_loss', patience=15, mode='min', verbose=1)
 
+import time
+
+start_time = time.time()
 model.fit(x_train, y_train, epochs=10000, batch_size=576, verbose=2,
     validation_split=0.0005, callbacks=[es])
+end_time = time.time() - start_time
 
 # 4. predict eval -> no need to
 
 loss = model.evaluate(x_test, y_test)
+print("time = ", end_time)
 print('loss[category] : ', loss[0])
-print('loss[accuracy] : ', loss[2])
+print('loss[accuracy] : ', loss[1])
 
 '''
 loss[category] :  0.06172657012939453
