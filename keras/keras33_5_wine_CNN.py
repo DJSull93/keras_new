@@ -22,7 +22,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
       test_size=0.15, shuffle=True, random_state=24)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
-scaler = QuantileTransformer()
+scaler = StandardScaler()
 scaler.fit(x_train) 
 x_train = scaler.transform(x_train) 
 x_test = scaler.transform(x_test) 
@@ -63,7 +63,7 @@ es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
 import time 
 start_time = time.time()
 hist = model.fit(x_train, y_train, epochs=1000, batch_size=256, verbose=2,
-    validation_split=0.02, callbacks=[es])
+    validation_split=0.01, callbacks=[es])
 end_time = time.time() - start_time
 
 # 4. 평가 예측
@@ -105,7 +105,7 @@ loss[category] :  0.6754863858222961
 loss[accuracy] :  0.8399999737739563
 
 CNN
-time =  23.411442279815674
-loss :  1.2041113376617432
-acc :  0.617959201335907
+time =  13.718469142913818
+loss :  1.0421748161315918
+acc :  0.6217687129974365
 '''
