@@ -1,3 +1,5 @@
+# Global Average Pooling
+
 # example cifar100
 
 from tensorflow.keras.datasets import cifar100
@@ -8,12 +10,8 @@ import matplotlib.pyplot as plt
 # 1. data
 (x_train, y_train), (x_test, y_test) = cifar100.load_data() 
 
-# preproccesing!!!!!!!!!!!
-
 x_train = x_train.reshape(50000, 32*32*3) # (50000, 32, 32, 3)
 x_test = x_test.reshape(10000, 32*32*3) # (10000, 32, 32, 3)
-
-# print(x_train.shape, x_test.shape) # (50000, 3072) (10000, 3072)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
 scaler = StandardScaler()
@@ -25,41 +23,46 @@ x_test = scaler.transform(x_test)
 x_train = x_train.reshape(50000, 32, 32, 3) # (50000, 32, 32, 3)
 x_test = x_test.reshape(10000, 32, 32, 3) # (10000, 32, 32, 3)
 
-# from sklearn.preprocessing import OneHotEncoder
-# one = OneHotEncoder()
-# y_train = y_train.reshape(-1,1)
-# y_test = y_test.reshape(-1,1)
-# one.fit(y_train)
-# y_train = one.transform(y_train).toarray() # (50000, 100)
-# y_test = one.transform(y_test).toarray() # (10000, 100)
-
 from tensorflow.keras.utils import to_categorical
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
 
-# 2. model
+# 2. model / importing GAP2D 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D
+from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout, GlobalAveragePooling2D
 
 model = Sequential()
-model.add(Conv2D(filters=128, kernel_size=(2, 2),                          
-                        padding='valid', activation='relu', 
+model.add(Conv2D(filters=32, kernel_size=(2, 2),                          
+                        padding='same', activation='relu', 
                         input_shape=(32, 32, 3))) 
-model.add(Conv2D(128, (2, 2), padding='same', activation='relu'))                   
+model.add(Dropout(0.2))
+model.add(Conv2D(32, (2, 2), padding='valid', activation='relu'))                   
 model.add(MaxPool2D())     
 
-model.add(Conv2D(128, (2, 2), padding='valid', activation='relu'))                   
+model.add(Conv2D(64, (2, 2), padding='same', activation='relu'))                   
+model.add(Dropout(0.2))
+model.add(Conv2D(64, (2, 2), padding='valid', activation='relu'))    
+model.add(MaxPool2D())  
+
+model.add(Conv2D(128, (2, 2), padding='same', activation='relu'))                   
+model.add(Dropout(0.2))
 model.add(Conv2D(128, (2, 2), padding='same', activation='relu'))    
 model.add(MaxPool2D())       
 
-model.add(Conv2D(64, (2, 2), padding='valid', activation='relu'))                   
-model.add(Conv2D(64, (2, 2), padding='same', activation='relu'))
-model.add(MaxPool2D())       
+# model.add(Conv2D(256, (3, 3), padding='same', activation='relu'))                   
+# model.add(Dropout(0.2))
+# model.add(Conv2D(256, (3, 3), padding='same', activation='relu'))
+# model.add(MaxPool2D())       
 
-model.add(Flatten())                                              
-model.add(Dense(128, activation='relu'))
-model.add(Dense(128, activation='relu'))
-model.add(Dense(128, activation='relu'))
+# model.add(Flatten())                                              
+# model.add(Dense(512, activation='relu'))
+# model.add(Dropout(0.1))
+# model.add(Dense(256, activation='relu'))
+# model.add(Dropout(0.1))
+# model.add(Dense(128, activation='relu'))
+# model.add(Dropout(0.1))
+
+model.add(GlobalAveragePooling2D())
 model.add(Dense(100, activation='softmax'))
 
 # 3. comple fit // metrics 'acc'
@@ -70,13 +73,13 @@ es = EarlyStopping(monitor='val_loss', patience=10, mode='min', verbose=1)
 
 import time 
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=100, batch_size=64, verbose=1,
-    validation_split=0.25, callbacks=[es])
+hist = model.fit(x_train, y_train, epochs=100, batch_size=256, verbose=2,
+    validation_split=0.15, callbacks=[es])
 end_time = time.time() - start_time
 
 # 4. predict eval -> no need to
 
-loss = model.evaluate(x_test, y_test, batch_size=64)
+loss = model.evaluate(x_test, y_test, batch_size=256)
 print("======================================")
 print("total time : ", end_time)
 print('loss : ', loss[0])
@@ -109,26 +112,18 @@ plt.legend(['acc', 'val_acc'])
 plt.show()
 
 '''
-loss :  4.9466118812561035
-acc :  0.4169999957084656
+loss :  2.268862247467041
+acc :  0.4440999925136566
 
-RobustScaler, val 0.005
-total time :  77.44221878051758
-loss :  5.040241241455078
-acc :  0.4172999858856201
+total time :  156.56675124168396
+loss :  2.177590847015381
+acc :  0.44670000672340393
 
-standard, val 0.2
-total time :  58.47070121765137
-loss :  3.875128984451294
-acc :  0.3799999952316284
+total time :  122.86703252792358
+loss :  2.1693880558013916
+acc :  0.4564000070095062
 
-standard, batch = 64
-total time :  111.92880010604858
-loss :  3.409672975540161
-acc :  0.3424000144004822
-
-standard, val = 0.25, model edit
-total time :  155.68979501724243
-loss :  2.941817283630371
-acc :  0.35100001096725464
+total time :  158.07011938095093
+loss :  2.1041903495788574
+acc :  0.47209998965263367
 '''

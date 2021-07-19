@@ -1,4 +1,4 @@
-# example cifar10
+# example cifar100
 # make perfect model
 # top 3 coffee
 

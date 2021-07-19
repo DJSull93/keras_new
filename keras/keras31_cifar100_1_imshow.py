@@ -1,4 +1,4 @@
-# example cifar10
+# example cifar100
 # imshow
 
 from tensorflow.keras.datasets import cifar100
