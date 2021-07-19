@@ -45,7 +45,7 @@ model.add(Dense(42, activation='relu'))
 model.add(Dense(10, activation='softmax'))
 
 # 3. comple fit // metrics 'acc'
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['mse', 'accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='acc')
 
 from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_loss', patience=15, mode='min', verbose=1)
@@ -60,17 +60,17 @@ end_time = time.time() - start_time
 # 4. predict eval -> no need to
 
 loss = model.evaluate(x_test, y_test)
-print("time = ", end_time)
-print('loss[category] : ', loss[0])
-print('loss[accuracy] : ', loss[2])
+print("time : ", end_time)
+print('loss : ', loss[0])
+print('acc: ', loss[1])
 
 '''
 CNN
-loss[category] :  0.4134199619293213
-loss[accuracy] :  0.923799991607666
+loss :  0.4134199619293213
+acc :  0.923799991607666
 
 DNN
 time =  19.189976692199707
-loss[category] :  0.3708308935165405
-loss[accuracy] :  0.8871999979019165
+loss :  0.3708308935165405
+acc :  0.8871999979019165
 '''

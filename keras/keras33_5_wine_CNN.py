@@ -69,7 +69,7 @@ end_time = time.time() - start_time
 # 4. 평가 예측
 
 loss = model.evaluate(x_test, y_test)
-print("time = ", end_time)
+print("time : ", end_time)
 print('loss : ', loss[0])
 print('acc : ', loss[1])
 
@@ -101,8 +101,8 @@ plt.show()
 '''
 DNN
 patience, val = 20, 0.0024
-loss[category] :  0.6754863858222961
-loss[accuracy] :  0.8399999737739563
+loss :  0.6754863858222961
+acc:  0.8399999737739563
 
 CNN
 time =  13.718469142913818

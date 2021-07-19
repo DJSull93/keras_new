@@ -63,7 +63,7 @@ y_predict = model.predict([x_test])
 # print('x의 예측값 : ', y_predict)
 
 loss = model.evaluate(x_test, y_test)
-print("time = ", end_time)
+print("time : ", end_time)
 print('loss : ', loss)
 r2 = r2_score(y_test, y_predict)
 print('R^2 score : ', r2)

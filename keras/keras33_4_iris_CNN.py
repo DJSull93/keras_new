@@ -67,7 +67,7 @@ end_time = time.time() - start_time
 # 4. 평가 예측
 
 loss = model.evaluate(x_test, y_test)
-print("time = ", end_time)
+print("time : ", end_time)
 print('loss : ', loss[0])
 print('acc : ', loss[1])
 
