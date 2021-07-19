@@ -10,8 +10,18 @@ from icecream import ic
 # y = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 (x_train, y_train), (x_test, y_test) = mnist.load_data() # (60000, 28, 28) (60000,) (10000, 28, 28) (10000,)
 
-x_train = x_train.reshape(60000, 28, 28, 1)/255. # (60000, 28, 28, 1)
-x_test = x_test.reshape(10000, 28, 28, 1)/255. # (10000, 28, 28, 1)
+x_train = x_train.reshape(60000, 28*28*1)
+x_test = x_test.reshape(10000, 28*28*1)
+
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
+scaler = RobustScaler()
+# scaler.fit(x_train) 
+# x_train = scaler.transform(x_train) 
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.transform(x_test) 
+
+x_train = x_train.reshape(60000, 28, 28, 1)
+x_test = x_test.reshape(10000, 28, 28, 1)
 
 from sklearn.preprocessing import OneHotEncoder
 one = OneHotEncoder()

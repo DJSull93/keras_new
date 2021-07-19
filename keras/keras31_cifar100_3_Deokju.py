@@ -1,21 +1,30 @@
 # example cifar10
-# make perfect model
-# top 3 coffee
+
 
 from tensorflow.keras.datasets import cifar100
 
 import numpy as np
 import matplotlib.pyplot as plt
-from icecream import ic
 
 # 1. data
 (x_train, y_train), (x_test, y_test) = cifar100.load_data() 
 
-# ic(x_train.shape, x_test.shape) # (50000, 32, 32, 3) (10000, 32, 32, 3)
-# ic(y_train.shape, y_test.shape) # (50000, 1) (10000, 1)
+# preproccesing!!!!!!!!!!!
 
-x_train = x_train.reshape(50000, 32, 32, 3)/255. # (50000, 32, 32, 3)
-x_test = x_test.reshape(10000, 32, 32, 3)/255. # (10000, 32, 32, 3)
+x_train = x_train.reshape(50000, 32*32*3) # (50000, 32, 32, 3)
+x_test = x_test.reshape(10000, 32*32*3) # (10000, 32, 32, 3)
+
+# print(x_train.shape, x_test.shape) # (50000, 3072) (10000, 3072)
+
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
+scaler = RobustScaler()
+# scaler.fit(x_train) 
+# x_train = scaler.transform(x_train) 
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.transform(x_test) 
+
+x_train = x_train.reshape(50000, 32, 32, 3) # (50000, 32, 32, 3)
+x_test = x_test.reshape(10000, 32, 32, 3) # (10000, 32, 32, 3)
 
 from sklearn.preprocessing import OneHotEncoder
 one = OneHotEncoder()
@@ -39,7 +48,7 @@ model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))
 model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))    
 model.add(MaxPool2D())                                         
 model.add(Conv2D(128, (4, 4), activation='relu'))                   
-model.add(Conv2D(256, (4, 4), activation='relu'))
+model.add(Conv2D(128, (4, 4), activation='relu'))
 model.add(MaxPool2D())                                         
 model.add(Flatten())                                              
 model.add(Dense(1024, activation='relu'))
@@ -48,36 +57,26 @@ model.add(Dense(256, activation='relu'))
 model.add(Dense(100, activation='softmax'))
 
 # 3. comple fit // metrics 'acc'
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['mse', 'accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='accuracy')
 
 from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
 
+import time 
+start_time = time.time()
 model.fit(x_train, y_train, epochs=10000, batch_size=512, verbose=2,
-    validation_split=0.0045, callbacks=[es])
-
+    validation_split=0.005, callbacks=[es])
+end_time = time.time() - start_time
 # 4. predict eval -> no need to
 
 loss = model.evaluate(x_test, y_test)
-print('loss[category] : ', loss[0])
-print('loss[accuracy] : ', loss[2])
+print("======================================")
+print("total time : ", end_time)
+print('loss[categorical] : ', loss[0])
+print('loss[accuracy] : ', loss[1])
+
 
 '''
-loss[category] :  6.727427959442139
-loss[accuracy] :  0.3682999908924103
-
-loss[category] :  7.6312689781188965
-loss[accuracy] :  0.37220001220703125
-
-loss[category] :  6.800853729248047
-loss[accuracy] :  0.3847000002861023
-
-loss[category] :  7.04472017288208
-loss[accuracy] :  0.3855000138282776
-
-loss[category] :  6.220393180847168
-loss[accuracy] :  0.4025000035762787
-
 loss[category] :  4.9466118812561035
 loss[accuracy] :  0.4169999957084656
 '''
