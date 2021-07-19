@@ -45,11 +45,11 @@ model.add(Dropout(0.1))
 model.add(Conv1D(64, 2, padding='same', activation='relu'))
 model.add(MaxPool1D())
 model.add(Conv1D(128, 2, padding='same', activation='relu'))
-model.add(Dropout(0.1))
+model.add(Dropout(0.2))
 model.add(Conv1D(128, 2, padding='same', activation='relu'))
 model.add(MaxPool1D())
 model.add(Conv1D(256, 2, padding='same', activation='relu'))
-model.add(Dropout(0.1))
+model.add(Dropout(0.2))
 model.add(Conv1D(256, 2, padding='same', activation='relu'))
 model.add(GlobalAveragePooling1D())
 model.add(Dense(7, activation="softmax"))
@@ -63,7 +63,7 @@ es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
 import time 
 start_time = time.time()
 hist = model.fit(x_train, y_train, epochs=1000, batch_size=256, verbose=2,
-    validation_split=0.01, callbacks=[es])
+    validation_split=0.1, callbacks=[es])
 end_time = time.time() - start_time
 
 # 4. 평가 예측
