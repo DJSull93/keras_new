@@ -14,7 +14,7 @@ x_train = x_train.reshape(50000, 32*32*3) # (50000, 32, 32, 3)
 x_test = x_test.reshape(10000, 32*32*3) # (10000, 32, 32, 3)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
-scaler = StandardScaler()
+scaler = QuantileTransformer()
 # scaler.fit(x_train) 
 # x_train = scaler.transform(x_train) 
 x_train = scaler.fit_transform(x_train)
@@ -36,11 +36,11 @@ from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, LSTM, Dropout, Input
 
 input1 = Input(shape=(32*32, 3))
-xx = LSTM(units=10, activation='relu')(input1)
-# xx = Dense(128, activation='relu')(xx)
+xx = LSTM(units=20, activation='relu')(input1)
+xx = Dense(128, activation='relu')(xx)
 # xx = Dense(64, activation='relu')(xx)
 # xx = Dense(32, activation='relu')(xx)
-xx = Dense(16, activation='relu')(xx)
+# xx = Dense(16, activation='relu')(xx)
 output1 = Dense(100, activation='softmax')(xx)
 
 model = Model(inputs=input1, outputs=output1)
@@ -53,8 +53,8 @@ es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
 
 import time 
 start_time = time.time()
-model.fit(x_train, y_train, epochs=10000, batch_size=512, verbose=2,
-    validation_split=0.0045, callbacks=[es])
+model.fit(x_train, y_train, epochs=30, batch_size=2000, verbose=2,
+    validation_split=0.02)
 end_time = time.time() - start_time
 
 # 4. predict eval -> no need to
@@ -62,7 +62,7 @@ end_time = time.time() - start_time
 loss = model.evaluate(x_test, y_test)
 print("time : ", end_time)
 print('loss : ', loss[0])
-print('acc : ', loss[2])
+print('acc : ', loss[1])
 
 '''
 CNN
@@ -75,5 +75,7 @@ loss :  3.2117340564727783
 acc :  0.257999986410141
 
 LSTM
-
+time :  1009.927225112915
+loss :  4.605213642120361
+acc :  0.009999999776482582
 '''

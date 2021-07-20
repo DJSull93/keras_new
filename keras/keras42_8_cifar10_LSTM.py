@@ -39,9 +39,9 @@ from tensorflow.keras.layers import Dense, LSTM, Dropout, Input
 
 input1 = Input(shape=(32*32, 3))
 xx = LSTM(units=10, activation='relu')(input1)
-# xx = Dense(128, activation='relu')(xx)
-# xx = Dense(64, activation='relu')(xx)
-# xx = Dense(32, activation='relu')(xx)
+xx = Dense(128, activation='relu')(xx)
+xx = Dense(64, activation='relu')(xx)
+xx = Dense(32, activation='relu')(xx)
 xx = Dense(16, activation='relu')(xx)
 output1 = Dense(10, activation='softmax')(xx)
 
@@ -56,8 +56,8 @@ es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
 import time 
 
 start_time = time.time()
-model.fit(x_train, y_train, epochs=10000, batch_size=576, verbose=2,
-    validation_split=0.05, callbacks=[es])
+model.fit(x_train, y_train, epochs=10, batch_size=2000, verbose=2,
+    validation_split=0.05)
 end_time = time.time() - start_time
 
 # 4. predict eval -> no need to
@@ -65,7 +65,7 @@ end_time = time.time() - start_time
 loss = model.evaluate(x_test, y_test)
 print("time : ", end_time)
 print('loss : ', loss[0])
-print('acc : ', loss[2])
+print('acc : ', loss[1])
 
 '''
 CNN
@@ -78,5 +78,7 @@ loss :  1.3962748050689697
 acc :  0.5027999877929688
 
 LSTM
-
+time :  981.9731032848358
+loss :  2.0776593685150146
+acc :  0.24459999799728394
 '''
