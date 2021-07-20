@@ -1,5 +1,5 @@
 # example cifar10
-# make model to LSTM
+# LSTM
 
 from tensorflow.keras.datasets import cifar10
 

@@ -1,5 +1,5 @@
 # boston 
-# make model to LSTM
+# LSTM
 
 import numpy as np
 from sklearn import datasets

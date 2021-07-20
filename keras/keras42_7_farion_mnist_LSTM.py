@@ -1,5 +1,5 @@
 # example fasion_mnist  
-# make model to LSTM
+# LSTM
 
 import numpy as np
 import matplotlib.pyplot as plt
