@@ -34,10 +34,10 @@ from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, LSTM, Dropout, Input
 
 input1 = Input(shape=(28*28, 1))
-xx = LSTM(units=20, activation='relu')(input1)
+xx = LSTM(units=10, activation='relu')(input1)
 # xx = Dense(128, activation='relu')(xx)
 # xx = Dense(64, activation='relu')(xx)
-xx = Dense(32, activation='relu')(xx)
+# xx = Dense(32, activation='relu')(xx)
 xx = Dense(16, activation='relu')(xx)
 output1 = Dense(10, activation='softmax')(xx)
 
