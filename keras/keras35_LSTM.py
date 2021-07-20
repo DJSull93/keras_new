@@ -1,3 +1,5 @@
+# LSTM 시계열 끝판왕 
+
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, SimpleRNN
@@ -31,26 +33,4 @@ model.fit(x, y, epochs=10000, batch_size=1, callbacks=[es])
 x_input = np.array([5, 6, 7]).reshape(1, 3, 1)
 y_pred = model.predict(x_input)
 print(y_pred) # [[8.]] epochs = 851
-
-# model.summary()
-
-'''
-input_shape (3, 1)
-_________________________________________________________________
-Layer (type)                 Output Shape              Param #
-=================================================================
-simple_rnn (SimpleRNN)       (None, 11)                143
-_________________________________________________________________
-dense (Dense)                (None, 10)                120
-_________________________________________________________________
-dense_1 (Dense)              (None, 1)                 11
-=================================================================
-Total params: 274
-Trainable params: 274
-Non-trainable params: 0
-_________________________________________________________________
-'''
-
-# (num_features + num_units)* num_units + biases
-# 11*11 + 11*1 + 11
 
