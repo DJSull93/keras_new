@@ -49,5 +49,5 @@ Trainable params: 274
 Non-trainable params: 0
 _________________________________________________________________
 '''
-# params = (num_features + num_units + bias)* num_units
+# params = (Input + bias + output ) * output
 # 143 = (11+1+1)*11

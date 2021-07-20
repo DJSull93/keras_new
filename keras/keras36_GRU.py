@@ -1,8 +1,8 @@
-# LSTM 시계열 끝판왕 
+# GRU 
 
 import numpy as np
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, SimpleRNN, LSTM
+from tensorflow.keras.layers import Dense, SimpleRNN, GRU
 
 # 1. data
 
@@ -17,8 +17,8 @@ x = x.reshape(4, 3, 1) # (batch_size, timesteps, feature)
 
 model = Sequential()
 # model.add(SimpleRNN(units=10, activation='relu', input_shape=(3, 1)))
-model.add(LSTM(units=10, activation='relu', input_shape=(3, 1)))
-model.add(Dense(5, activation='relu'))
+model.add(GRU(units=5, activation='relu', input_shape=(3, 1)))
+model.add(Dense(10, activation='relu'))
 model.add(Dense(1))
 
 # 3. compile train
@@ -33,23 +33,24 @@ model.fit(x, y, epochs=10000, batch_size=1, callbacks=[es])
 # 4. pred eval
 x_input = np.array([5, 6, 7]).reshape(1, 3, 1)
 y_pred = model.predict(x_input)
-print(y_pred) # [[8.006084]] epochs = 1745
+print(y_pred) # epochs = 1745
 
-# model.summary()
+model.summary()
 '''
+inpur (3, 1)
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #
 =================================================================
-lstm (LSTM)                  (None, 10)                480
+gru (GRU)                    (None, 10)                390
 _________________________________________________________________
-dense (Dense)                (None, 10)                110
+dense (Dense)                (None, 5)                 55
 _________________________________________________________________
-dense_1 (Dense)              (None, 1)                 11
+dense_1 (Dense)              (None, 1)                 6
 =================================================================
-Total params: 601
-Trainable params: 601
+Total params: 451
+Trainable params: 451
 Non-trainable params: 0
 _________________________________________________________________
 '''
-# params = 4 * (Input + bias + output ) * output
-# 480 = 4 * (10 + 1 + 1) * 10
+# forget gate deleted
+# 3 * (Input + bias + output + resetgate) * output
