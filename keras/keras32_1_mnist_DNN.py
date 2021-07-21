@@ -62,8 +62,8 @@ end_time = time.time() - start_time
 
 loss = model.evaluate(x_test, y_test)
 print("time : ", end_time)
-print('loss[category] : ', loss[0])
-print('loss[accuracy] : ', loss[1])
+print('loss : ', loss[0])
+print('acc : ', loss[1])
 
 '''
 CNN
@@ -73,6 +73,6 @@ acc :  0.9821000099182129
 
 DNN
 time :  20.324632167816162
-loss[category] :  0.09825558215379715
-loss[accuracy] :  0.9785000085830688
+loss :  0.09825558215379715
+acc :  0.9785000085830688
 '''

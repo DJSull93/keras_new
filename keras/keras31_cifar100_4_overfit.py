@@ -80,6 +80,7 @@ print("======================================")
 print("total time : ", end_time)
 print('loss : ', loss[0])
 print('acc : ', loss[1])
+'''
 
 # 5. plt visualize
 import matplotlib.pyplot as plt
@@ -106,7 +107,7 @@ plt.xlabel("epochs")
 plt.legend(['acc', 'val_acc'])
 
 plt.show()
-
+'''
 '''
 standard, val = 0.25, model edit/ dropout
 total time :  155.68979501724243 # before dropout # after dropout

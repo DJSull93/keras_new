@@ -36,7 +36,7 @@ model.add(Flatten())
 model.add(Dense(64, activation='relu'))
 model.add(Dense(10, activation='softmax'))
 
-# 3. comple fit // metrics 'acc'
+# 3. compile fit // metrics 'acc'
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='accuracy')
 
 from tensorflow.keras.callbacks import EarlyStopping

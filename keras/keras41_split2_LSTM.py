@@ -22,7 +22,6 @@ x_pred = split_x(x_pred, size2) # (6, 5)
 
 x = dataset[:, :-1] # (95, 5)  
 y = dataset[:, -1] # (95,)
-x_pred = x_pred[:, :-1]
 
 # print(x.shape, y.shape, x_pred.shape)
 from sklearn.model_selection import train_test_split
@@ -87,8 +86,8 @@ print('rmse score : ', rmse)
 r2 = r2_score(y_test, y_pred)
 print('R^2 score : ', r2)
 
-# y_pred = model.predict(x_test)
-
+res = model.predict(x_pred)
+print('predict :', res)
 
 '''
 test1 
@@ -104,4 +103,11 @@ y_pred :
 time :  8.504086256027222
 rmse score :  0.6715605774726878
 R^2 score :  0.9992726234511603
+predict : 
+[[107.53908 ]
+ [109.18083 ]
+ [110.8416  ]
+ [112.52144 ]
+ [114.22052 ]
+ [115.938965]]
 '''
