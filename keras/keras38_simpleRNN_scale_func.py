@@ -13,7 +13,6 @@ x_predict = np.array([50,60,70])
 x_predict = x_predict.reshape(1, x_predict.shape[0], 1)
 # print(x.shape, y.shape)
 
-x = x.reshape(13, 3, 1) # (batch_size, timesteps, feature)
 x = x.reshape(x.shape[0], x.shape[1], 1)
 
 # 2. model

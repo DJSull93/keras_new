@@ -20,9 +20,7 @@ x1_predict = x1_predict.reshape(1, x1_predict.shape[0], 1)
 x2_predict = x2_predict.reshape(1, x2_predict.shape[0], 1)
 # print(x1.shape, x2.shape, y.shape)
 
-x1 = x1.reshape(13, 3, 1) # (batch_size, timesteps, feature)
 x1 = x1.reshape(x1.shape[0], x1.shape[1], 1)
-x2 = x2.reshape(13, 3, 1) 
 x2 = x2.reshape(x2.shape[0], x2.shape[1], 1)
 
 # 2. model

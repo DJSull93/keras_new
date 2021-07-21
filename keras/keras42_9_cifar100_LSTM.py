@@ -37,9 +37,9 @@ from tensorflow.keras.layers import Dense, LSTM, Dropout, Input
 
 input1 = Input(shape=(32*32, 3))
 xx = LSTM(units=20, activation='relu')(input1)
+xx = Dense(256, activation='relu')(xx)
 xx = Dense(128, activation='relu')(xx)
-# xx = Dense(64, activation='relu')(xx)
-# xx = Dense(32, activation='relu')(xx)
+xx = Dense(100, activation='relu')(xx)
 # xx = Dense(16, activation='relu')(xx)
 output1 = Dense(100, activation='softmax')(xx)
 
@@ -54,7 +54,7 @@ es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
 import time 
 start_time = time.time()
 model.fit(x_train, y_train, epochs=30, batch_size=2000, verbose=2,
-    validation_split=0.02)
+    validation_split=0.05)
 end_time = time.time() - start_time
 
 # 4. predict eval -> no need to
