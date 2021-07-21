@@ -1,5 +1,5 @@
 # diabetes 
-# LSTM
+# make model to CNN
 
 import numpy as np
 from sklearn import datasets
@@ -27,17 +27,24 @@ x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], 1)
 
 # 2. model 구성
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, LSTM, Dropout, Input
+from tensorflow.keras.layers import Dense, Input, Conv1D, Flatten, Dropout, GlobalAveragePooling1D, MaxPool1D
 
-input1 = Input(shape=(10, 1))
-xx = LSTM(units=20, activation='relu')(input1)
-xx = Dense(128, activation='relu')(xx)
-xx = Dense(64, activation='relu')(xx)
-xx = Dense(32, activation='relu')(xx)
-xx = Dense(16, activation='relu')(xx)
-output1 = Dense(1)(xx)
-
-model = Model(inputs=input1, outputs=output1)
+model = Sequential()
+model.add(Conv1D(filters=32, kernel_size=2, padding='same',                          
+                        activation='relu', input_shape=(10, 1))) 
+model.add(Dropout(0.2))
+model.add(Conv1D(32, 2, padding='same', activation='relu'))
+model.add(MaxPool1D())
+model.add(Conv1D(64, 2, padding='same', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Conv1D(64, 2, padding='same', activation='relu'))
+model.add(MaxPool1D())
+model.add(Conv1D(128, 2, padding='same', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Conv1D(128, 2, padding='same', activation='relu'))
+model.add(MaxPool1D())
+model.add(GlobalAveragePooling1D())
+model.add(Dense(1))
 
 # 3. 컴파일 훈련
 model.compile(loss='mse', optimizer='adam')
@@ -68,7 +75,7 @@ $ MaxAbsScaler
 loss :  2247.06396484375
 R^2 score :  0.6105307266558146
 
-CNN - Conv1D
+CNN
 time =  10.436100006103516
 loss :  2641.959228515625
 R^2 score :  0.542086011867093

@@ -1,7 +1,8 @@
-# Timeseries data make train, test example function
-# preprocess, traintest split, early stop
+# Conv1D
 
 import numpy as np
+from tensorflow.python.keras.layers.convolutional import Conv1D
+from tensorflow.python.keras.layers.core import Flatten
 
 x_data = np.array(range(1, 101))
 x_pred = np.array(range(96, 106))
@@ -22,7 +23,6 @@ x_pred = split_x(x_pred, size2) # (6, 5)
 
 x = dataset[:, :-1] # (95, 5)  
 y = dataset[:, -1] # (95,)
-x_pred = x_pred[:, :-1]
 
 # print(x.shape, y.shape, x_pred.shape)
 from sklearn.model_selection import train_test_split
@@ -45,7 +45,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, SimpleRNN, LSTM, Dropout
 
 model = Sequential()
-model.add(LSTM(units=10, activation='relu', input_shape=(5, 1)))
+model.add(Conv1D(filters=32, kernel_size=2, activation='relu', input_shape=(5, 1)))
+model.add(Flatten())
 model.add(Dense(64, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
@@ -68,16 +69,8 @@ end_time = time.time() - start_time
 # 4. pred eval
 from sklearn.metrics import r2_score, mean_squared_error
 y_pred = model.predict(x_test)
-print("time : ", end_time)
 print('y_pred : \n', y_pred) 
-
-# print(y_pred.shape)
-
-# y_pred = y_pred.reshape(y_pred.shape[0], 1)
-# y_test = y_test.reshape(y_test.shape[0], 1)
-
-# print(y_pred.shape) # (6,)
-# print(y_test.shape) # (6,)
+print("time : ", end_time)
 
 def RMSE(y_test, y_pred):
     return np.sqrt(mean_squared_error(y_test, y_pred))
@@ -87,21 +80,28 @@ print('rmse score : ', rmse)
 r2 = r2_score(y_test, y_pred)
 print('R^2 score : ', r2)
 
-# y_pred = model.predict(x_test)
-
+result = model.predict(x_pred)
+print('predict :', result)
 
 '''
-test1 
-time :  29.95013689994812
-y_pred :  
- [[101.0128 ]
- [102.01505]
- [103.0174 ]
- [104.01986]
- [105.02239]
- [106.02503]]
-
+LSTM
 time :  8.504086256027222
 rmse score :  0.6715605774726878
 R^2 score :  0.9992726234511603
+
+Conv1D
+time :  5.397651433944702
+rmse score :  0.4566738942992806
+R^2 score :  0.9996636423736311
+
+time :  5.44609808921814
+rmse score :  0.579285732909914
+R^2 score :  0.9994587790837358
+predict : 
+[[100.01511 ]
+ [100.99184 ]
+ [101.96859 ]
+ [102.94531 ]
+ [103.922066]
+ [104.898796]]
 '''

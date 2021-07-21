@@ -1,5 +1,5 @@
 # wine2 
-# LSTM
+# make model to CNN
 
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
@@ -32,17 +32,27 @@ x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], 1)
 
 # 2. model 구성
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, LSTM, Dropout, Input
+from tensorflow.keras.layers import Dense, Input, Conv1D, Flatten, Dropout, GlobalAveragePooling1D, MaxPool1D
 
-input1 = Input(shape=(11, 1))
-xx = LSTM(units=20, activation='relu')(input1)
-xx = Dense(128, activation='relu')(xx)
-xx = Dense(64, activation='relu')(xx)
-xx = Dense(32, activation='relu')(xx)
-xx = Dense(16, activation='relu')(xx)
-output1 = Dense(7, activation='softmax')(xx)
-
-model = Model(inputs=input1, outputs=output1)
+model = Sequential()
+model.add(Conv1D(filters=32, kernel_size=2, padding='same',                          
+                        activation='relu', input_shape=(11, 1))) 
+model.add(Dropout(0.1))
+model.add(Conv1D(32, 2, padding='same', activation='relu'))
+model.add(MaxPool1D())
+model.add(Conv1D(64, 2, padding='same', activation='relu'))
+model.add(Dropout(0.1))
+model.add(Conv1D(64, 2, padding='same', activation='relu'))
+model.add(MaxPool1D())
+model.add(Conv1D(128, 2, padding='same', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Conv1D(128, 2, padding='same', activation='relu'))
+model.add(MaxPool1D())
+model.add(Conv1D(256, 2, padding='same', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Conv1D(256, 2, padding='same', activation='relu'))
+model.add(GlobalAveragePooling1D())
+model.add(Dense(7, activation="softmax"))
 
 # 3. 컴파일 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='acc')
@@ -64,37 +74,37 @@ print('loss : ', loss[0])
 print('acc : ', loss[1])
 
 # 5. plt visualize
-# import matplotlib.pyplot as plt
-# plt.figure(figsize=(9,5))
+import matplotlib.pyplot as plt
+plt.figure(figsize=(9,5))
 
 # plot 1 
-# plt.subplot(2,1,1)
-# plt.plot(hist.history["loss"], marker='.', c='red', label='loss')
-# plt.plot(hist.history["val_loss"], marker='.', c='blue', label='val_loss')
-# plt.grid()
-# plt.title("loss")
-# plt.ylabel("loss")
-# plt.xlabel("epochs")
-# plt.legend(loc='upper right')
+plt.subplot(2,1,1)
+plt.plot(hist.history["loss"], marker='.', c='red', label='loss')
+plt.plot(hist.history["val_loss"], marker='.', c='blue', label='val_loss')
+plt.grid()
+plt.title("loss")
+plt.ylabel("loss")
+plt.xlabel("epochs")
+plt.legend(loc='upper right')
 
 # plot 2
-# plt.subplot(2,1,2)
-# plt.plot(hist.history["acc"])
-# plt.plot(hist.history["val_acc"])
-# plt.grid()
-# plt.title("acc")
-# plt.ylabel("acc")
-# plt.xlabel("epochs")
-# plt.legend(['acc', 'val_acc'])
+plt.subplot(2,1,2)
+plt.plot(hist.history["acc"])
+plt.plot(hist.history["val_acc"])
+plt.grid()
+plt.title("acc")
+plt.ylabel("acc")
+plt.xlabel("epochs")
+plt.legend(['acc', 'val_acc'])
 
-# plt.show()
+plt.show()
 '''
 DNN
 patience, val = 20, 0.0024
 loss :  0.6754863858222961
 acc:  0.8399999737739563
 
-CNN - Conv1D
+CNN
 time =  13.718469142913818
 loss :  1.0421748161315918
 acc :  0.6217687129974365

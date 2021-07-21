@@ -1,5 +1,5 @@
 # iris 
-# LSTM
+# make model to CNN
 
 import numpy as np
 from sklearn.datasets import load_iris
@@ -32,17 +32,24 @@ x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], 1)
 
 # 2. model 구성
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, LSTM, Dropout, Input
+from tensorflow.keras.layers import Dense, Input, Conv1D, Flatten, Dropout, GlobalAveragePooling1D, MaxPool1D
 
-input1 = Input(shape=(4, 1))
-xx = LSTM(units=20, activation='relu')(input1)
-xx = Dense(128, activation='relu')(xx)
-xx = Dense(64, activation='relu')(xx)
-xx = Dense(32, activation='relu')(xx)
-xx = Dense(16, activation='relu')(xx)
-output1 = Dense(3, activation='softmax')(xx)
-
-model = Model(inputs=input1, outputs=output1)
+model = Sequential()
+model.add(Conv1D(filters=32, kernel_size=2, padding='same',                          
+                        activation='relu', input_shape=(4, 1))) 
+model.add(Dropout(0.2))
+model.add(Conv1D(32, 2, padding='same', activation='relu'))
+model.add(MaxPool1D())
+model.add(Conv1D(64, 2, padding='same', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Conv1D(64, 2, padding='same', activation='relu'))
+# model.add(MaxPool1D())
+# model.add(Conv1D(128, 2, padding='same', activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(Conv1D(128, 2, padding='same', activation='relu'))
+# model.add(MaxPool1D())
+model.add(GlobalAveragePooling1D())
+model.add(Dense(3, activation="softmax"))
 
 # 3. 컴파일 훈련
 # data 형태가 다르므로 mse 대신 categorical_crossentropy 사용
@@ -70,7 +77,7 @@ QuantileTransformer
 loss[binary] :  0.00010815416317200288
 loss[accuracy] :  1.0
 
-CNN - Conv1D
+CNN
 time =  5.77199125289917
 loss :  0.11078570783138275
 acc :  0.9736841917037964

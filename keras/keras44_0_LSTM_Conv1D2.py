@@ -1,7 +1,8 @@
-# Timeseries data make train, test example function
-# preprocess, traintest split, early stop
+# Conv1D
 
 import numpy as np
+from tensorflow.python.keras.layers.convolutional import Conv1D
+from tensorflow.python.keras.layers.core import Flatten
 
 x_data = np.array(range(1, 101))
 x_pred = np.array(range(96, 106))
@@ -34,18 +35,21 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, Ma
 scaler = MinMaxScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
-x_pred = scaler.transform(x_pred)
+# x_pred = scaler.transform(x_pred)
 
 x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], 1)
 x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], 1)
-x_pred = x_pred.reshape(x_pred.shape[0], x_pred.shape[1], 1)
+# x_pred = x_pred.reshape(x_pred.shape[0], x_pred.shape[1], 1)
 
 # 2. model
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, SimpleRNN, LSTM, Dropout
 
 model = Sequential()
-model.add(LSTM(units=10, activation='relu', input_shape=(5, 1)))
+model.add(Conv1D(filters=32, kernel_size=2, activation='relu', input_shape=(5, 1)))
+model.add(LSTM(64, return_sequences=True))
+model.add(Conv1D(filters=32, kernel_size=2))
+model.add(Flatten())
 model.add(Dense(64, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
@@ -68,16 +72,8 @@ end_time = time.time() - start_time
 # 4. pred eval
 from sklearn.metrics import r2_score, mean_squared_error
 y_pred = model.predict(x_test)
-print("time : ", end_time)
 print('y_pred : \n', y_pred) 
-
-# print(y_pred.shape)
-
-# y_pred = y_pred.reshape(y_pred.shape[0], 1)
-# y_test = y_test.reshape(y_test.shape[0], 1)
-
-# print(y_pred.shape) # (6,)
-# print(y_test.shape) # (6,)
+print("time : ", end_time)
 
 def RMSE(y_test, y_pred):
     return np.sqrt(mean_squared_error(y_test, y_pred))
@@ -87,21 +83,22 @@ print('rmse score : ', rmse)
 r2 = r2_score(y_test, y_pred)
 print('R^2 score : ', r2)
 
-# y_pred = model.predict(x_test)
-
+# result = model.predict(x_pred)
+# print('predict :', result)
 
 '''
-test1 
-time :  29.95013689994812
-y_pred :  
- [[101.0128 ]
- [102.01505]
- [103.0174 ]
- [104.01986]
- [105.02239]
- [106.02503]]
-
+LSTM
 time :  8.504086256027222
 rmse score :  0.6715605774726878
 R^2 score :  0.9992726234511603
+
+Conv1D
+time :  5.397651433944702
+rmse score :  0.4566738942992806
+R^2 score :  0.9996636423736311
+
+LSTM+Conv2D
+time :  7.81533408164978
+rmse score :  0.6475613227371334
+R^2 score :  0.9993236823675087
 '''

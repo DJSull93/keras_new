@@ -1,5 +1,5 @@
 # mnist example 
-# LSTM
+# make perfect model in DNN
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,8 +19,8 @@ scaler = QuantileTransformer()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test) 
 
-x_train = x_train.reshape(60000, 28*28, 1)
-x_test = x_test.reshape(10000, 28*28, 1)
+x_train = x_train.reshape(60000, 28, 28)
+x_test = x_test.reshape(10000, 28, 28)
 
 from sklearn.preprocessing import OneHotEncoder
 one = OneHotEncoder()
@@ -31,18 +31,21 @@ y_train = one.transform(y_train).toarray() # (60000, 10)
 y_test = one.transform(y_test).toarray() # (10000, 10)
 
 # 2. model
-from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, LSTM, Dropout, Input
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv1D, Flatten, MaxPool1D, GlobalAveragePooling1D, Dropout
 
-input1 = Input(shape=(28*28, 1))
-xx = LSTM(units=10, activation='relu')(input1)
-xx = Dense(128, activation='relu')(xx)
-xx = Dense(64, activation='relu')(xx)
-xx = Dense(32, activation='relu')(xx)
-xx = Dense(10, activation='relu')(xx)
-output1 = Dense(10, activation='softmax')(xx)
-
-model = Model(inputs=input1, outputs=output1)
+model = Sequential()
+model.add(Conv1D(filters=32, kernel_size=2, padding='same',                        
+                        activation='relu' ,input_shape=(28, 28))) 
+model.add(Conv1D(32, 2, padding='same', activation='relu'))                   
+model.add(MaxPool1D())                                         
+model.add(Conv1D(64, 2, padding='same', activation='relu'))                   
+model.add(Conv1D(64, 2, padding='same', activation='relu'))    
+model.add(Flatten())                                              
+model.add(Dense(256, activation='relu'))
+model.add(Dense(124, activation='relu'))
+model.add(Dense(84, activation='relu'))
+model.add(Dense(10, activation='softmax'))
 
 # 3. comple fit // metrics 'acc'
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='acc')
@@ -53,8 +56,8 @@ es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
 import time
 
 start_time = time.time()
-model.fit(x_train, y_train, epochs=30, batch_size=2000, verbose=1,
-    validation_split=0.25)
+model.fit(x_train, y_train, epochs=1000, batch_size=256, verbose=2,
+    validation_split=0.025, callbacks=[es])
 end_time = time.time() - start_time
 
 # 4. predict eval -> no need to
@@ -65,10 +68,10 @@ print('loss : ', loss[0])
 print('acc : ', loss[1])
 
 '''
-CNN - Conv1D
-time =  12.263086080551147
-loss :  0.08342713862657547
-acc :  0.9821000099182129
+CNN Conv1D
+time :  40.72909498214722
+loss :  0.07107406854629517
+acc :  0.9860000014305115
 
 DNN
 time :  20.324632167816162
