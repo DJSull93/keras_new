@@ -7,7 +7,7 @@ size = 5 # x , y total columns -> one data units
 
 def split_x(dataset, size):
     aaa = []
-    for i in range(len(dataset) - size + 2):
+    for i in range(len(dataset) - size + 1):
         subset = dataset[i : (i + size)]
         aaa.append(subset)
     return np.array(aaa)
@@ -25,7 +25,7 @@ print(dataset)
  [ 6  7  8  9 10]]
 '''
 
-x = dataset[:, :-1]
+x = dataset[:, :-2]
 y = dataset[:, -1]
 
 print('x :\n', x)
