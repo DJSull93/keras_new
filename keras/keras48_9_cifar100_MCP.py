@@ -1,4 +1,4 @@
-# example cifar100
+# example cifar100 #######################
 # make perfect model in DNN
 
 from tensorflow.keras.datasets import cifar100
