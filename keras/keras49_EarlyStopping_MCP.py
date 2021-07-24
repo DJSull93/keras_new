@@ -2,9 +2,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 import numpy as np
 from tensorflow.python.keras.saving.save import load_model
-####
+########################
 # 1. data
-####
+########################
 x1 = np.array([range(100), range(301, 401), range(1, 101)])
 x2 = np.array([range(101, 201), range(411, 511), range(100, 200)])
 x1 = np.transpose(x1) # (100,3)
