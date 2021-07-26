@@ -106,51 +106,41 @@ xk_pred = xk_pred.reshape(1, 10, 5)
 # 2. model
 from tensorflow.keras.models import Sequential, Model, load_model
 from tensorflow.keras.layers import Dense, GRU, Dropout, Input, LSTM, GlobalAveragePooling1D, Conv1D, Flatten, MaxPool1D
-
+'''
 # 2-1. model1
 input1 = Input(shape=(10,4))
-xx = GRU(units=64, activation='relu')(input1)
+xx = LSTM(units=6, activation='relu')(input1)
 xx = Dense(100, activation='relu')(xx)
 xx = Dense(64, activation='relu')(xx)
 xx = Dropout(0.005)(xx)
-xx = Dense(64, activation='relu')(xx)
 xx = Dense(32, activation='relu')(xx)
-xx = Dropout(0.005)(xx)
+xx = Dense(16, activation='relu')(xx)
+# xx = Dropout(0.02)(xx)
 # xx = Dense(16, activation='relu')(xx)
 # xx = Dense(16, activation='relu')(xx)
-output1 = Dense(32)(xx)
+output1 = Dense(16)(xx)
 
 # 2-2. model2
 input2 = Input(shape=(10,5))
-xx = GRU(units=64, activation='relu')(input2)
+xx = LSTM(units=6, activation='relu')(input2)
 xx = Dense(100, activation='relu')(xx)
 xx = Dense(64, activation='relu')(xx)
-xx = Dropout(0.005)(xx)
-xx = Dense(64, activation='relu')(xx)
-xx = Dense(64, activation='relu')(xx)
-xx = Dropout(0.005)(xx)
-# xx = Dense(32, activation='relu')(xx)
-# xx = Dense(32, activation='relu')(xx)
-output2 = Dense(32)(xx)
+# xx = Dropout(0.005)(xx)
+xx = Dense(32, activation='relu')(xx)
+xx = Dense(32, activation='relu')(xx)
+# xx = Dropout(0.005)(xx)
+xx = Dense(16, activation='relu')(xx)
+# xx = Dense(16, activation='relu')(xx)
+output2 = Dense(8)(xx)
 
 # 2-3. model 1, 2 merge
 from tensorflow.keras.layers import concatenate
 
 merge1 = concatenate([output1, output2]) # merge 도 layer 임
-xx = Dense(128, activation='relu')(merge1)
-xx = Dense(128, activation='relu')(xx)
-xx = Dropout(0.001)(xx)
-xx = Dense(64, activation='relu')(merge1)
-xx = Dense(64, activation='relu')(xx)
-xx = Dropout(0.001)(xx)
-xx = Dense(32, activation='relu')(merge1)
-xx = Dense(32, activation='relu')(xx)
-xx = Dropout(0.001)(xx)
+xx = Dense(16, activation='relu')(merge1)
 xx = Dense(16, activation='relu')(xx)
 xx = Dense(8, activation='relu')(xx)
-# xx = Dropout(0.001)(xx)
-xx = Dense(4, activation='relu')(xx)
-xx = Dense(4, activation='relu')(xx)
+xx = Dense(8, activation='relu')(xx)
 last_output = Dense(1)(xx)
 
 model = Model(inputs=[input1, input2], outputs=last_output)
@@ -180,8 +170,8 @@ mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=2,
             save_best_only=True, 
             filepath= modelpath)
 
-model.fit([xs_train, xk_train], y_train, epochs=10000, batch_size=64, verbose=1, 
-            callbacks=[es, mcp], validation_split=0.075)
+model.fit([xs_train, xk_train], y_train, epochs=10000, batch_size=1024, verbose=1, 
+            callbacks=[es, mcp], validation_split=0.15)
 
 print('=================1. basic print=================')
 # 4. evaluate, predict
@@ -196,7 +186,7 @@ print('26th start : ',result)
 
 '''
 print('=================2. load model=================')
-model = load_model('./_save/MCP_M/SDJ_02_0723_1055_0801_4259067.500000.hdf5')
+model = load_model('./_save/MCP_M/SDJ_02_0723_1940_3299_891984.562500.hdf5')
 
 # 4. evaluate, predict
 y1_predict= model.predict([xs_test, xk_test])
@@ -207,8 +197,9 @@ print('loss : ', loss)
 
 result = model.predict([xs_pred, xk_pred])
 print('26th start : ',result)
-'''
+
 
 '''
-
+loss :  840424.625
+26th start :  [[79210.5]]
 '''

@@ -34,7 +34,7 @@ sk = sk.to_numpy() # (2601, 5)
 sk = sk.astype('float32')
 
 # timeseries split
-size = 10
+size = 20
 
 def split_x(dataset, size):
     st = []
@@ -43,17 +43,17 @@ def split_x(dataset, size):
         st.append(subset)
     return np.array(st)
 
-sam = split_x(sam, size) # (2561, 40, 5) 
-sk = split_x(sk, size) # (2561, 40, 5)
+sam = split_x(sam, size) # (2581, 20, 5) 
+sk = split_x(sk, size) # (2581, 20, 5)
 
 # sam ->, s 
-xs = sam[:-1,:,[1,2,3,4]] # (2561, 40, 4)
-ys = sam[:-1,:,0] # (2561, 40)
+xs = sam[:-1,:,[1,2,3,4]] # (2581, 20, 4)
+ys = sam[:-1,:,0] # (2581, 20)
 xs_pred = sam[-1,:,:] # 
 xs_pred = np.delete(xs_pred, 0, 1)
 
-xs = np.delete(xs, [-3,-2,-1], axis=0) # (2588, 10, 4) 
-ys = np.delete(ys, [0,1,2], axis=0) # (2588, 10)
+ys = np.delete(ys, [0,1,2], axis=0) # (2578, 20) 
+xs = np.delete(xs, [-3,-2,-1], axis=0) # (2578, 20, 4)
 
 # print(xs.shape, ys.shape) #  
 # print(xs[0,:,:]) # ~0715
@@ -64,25 +64,24 @@ ys = np.delete(ys, [0,1,2], axis=0) # (2588, 10)
 # sk -> k
 xk = sk[:-1,:,[0,1,2,3,4]] # 
 xk_pred = sk[-1,:,:] # 
-xk = np.delete(xk, [-3,-2,-1], axis=0) # (2498, 40, 5)
+xk = np.delete(xk, [-3,-2,-1], axis=0) # (2578, 20, 5)
 
 # print(xs_pred.shape, xk_pred.shape)
 
 # train test
 xs_train, xs_test, xk_train, xk_test, y_train, y_test = train_test_split(xs, xk, ys,
-      test_size=0.25, shuffle=True, random_state=66)
+      test_size=0.25, shuffle=True, random_state=9)
 
-# print(xs_train.shape, xk_train.shape) # (1941, 10, 4) (1941, 10, 5)
-# print(xs_test.shape, xk_test.shape) # (647, 10, 4) (647, 10, 5)
+# print(xs_train.shape, xk_train.shape) # (1933, 20, 4) (1933, 20, 5)
+# print(xs_test.shape, xk_test.shape) # (645, 20, 4) (645, 20, 5)
 
 # preproccess
-xs_train = xs_train.reshape(1941*10, 4)
-xs_test = xs_test.reshape(647*10, 4)
-xs_pred = xs_pred.reshape(10, 4)
-
-xk_train = xk_train.reshape(1941*10, 5)
-xk_test = xk_test.reshape(647*10, 5)
-xk_pred = xk_pred.reshape(10, 5)
+xs_train = xs_train.reshape(1933*20, 4)
+xs_test = xs_test.reshape(645*20, 4)
+xs_pred = xs_pred.reshape(20, 4)
+xk_train = xk_train.reshape(1933*20, 5)
+xk_test = xk_test.reshape(645*20, 5)
+xk_pred = xk_pred.reshape(20, 5)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
 scaler = MinMaxScaler()
@@ -90,67 +89,39 @@ scaler = MinMaxScaler()
 xs_train = scaler.fit_transform(xs_train)
 xs_test = scaler.transform(xs_test)
 xs_pred = scaler.transform(xs_pred)
-
 xk_train = scaler.fit_transform(xk_train)
 xk_test = scaler.transform(xk_test)
 xk_pred = scaler.transform(xk_pred)
 
-xs_train = xs_train.reshape(1941, 10, 4)
-xs_test = xs_test.reshape(647, 10, 4)
-xs_pred = xs_pred.reshape(1, 10, 4)
+xs_train = xs_train.reshape(1933, 20, 4)
+xs_test = xs_test.reshape(645, 20, 4)
+xs_pred = xs_pred.reshape(1, 20, 4)
 
-xk_train = xk_train.reshape(1941, 10, 5)
-xk_test = xk_test.reshape(647, 10, 5)
-xk_pred = xk_pred.reshape(1, 10, 5)
+xk_train = xk_train.reshape(1933, 20, 5)
+xk_test = xk_test.reshape(645, 20, 5)
+xk_pred = xk_pred.reshape(1, 20, 5)
 
 # 2. model
 from tensorflow.keras.models import Sequential, Model, load_model
-from tensorflow.keras.layers import Dense, GRU, Dropout, Input, LSTM, GlobalAveragePooling1D, Conv1D, Flatten, MaxPool1D
+from tensorflow.keras.layers import Dense, GRU, Dropout, Input, LSTM, GlobalAveragePooling1D, Conv1D, MaxPool1D
 
 # 2-1. model1
-input1 = Input(shape=(10,4))
-xx = GRU(units=64, activation='relu')(input1)
-xx = Dense(100, activation='relu')(xx)
-xx = Dense(64, activation='relu')(xx)
-xx = Dropout(0.005)(xx)
-xx = Dense(64, activation='relu')(xx)
-xx = Dense(32, activation='relu')(xx)
-xx = Dropout(0.005)(xx)
-# xx = Dense(16, activation='relu')(xx)
-# xx = Dense(16, activation='relu')(xx)
+input1 = Input(shape=(20,4))
+xx = GRU(units=128, activation='relu')(input1)
 output1 = Dense(32)(xx)
 
 # 2-2. model2
-input2 = Input(shape=(10,5))
-xx = GRU(units=64, activation='relu')(input2)
-xx = Dense(100, activation='relu')(xx)
-xx = Dense(64, activation='relu')(xx)
-xx = Dropout(0.005)(xx)
-xx = Dense(64, activation='relu')(xx)
-xx = Dense(64, activation='relu')(xx)
-xx = Dropout(0.005)(xx)
-# xx = Dense(32, activation='relu')(xx)
-# xx = Dense(32, activation='relu')(xx)
+input2 = Input(shape=(20,5))
+xx = LSTM(units=128, activation='relu')(input2)
 output2 = Dense(32)(xx)
 
 # 2-3. model 1, 2 merge
 from tensorflow.keras.layers import concatenate
 
 merge1 = concatenate([output1, output2]) # merge 도 layer 임
-xx = Dense(128, activation='relu')(merge1)
-xx = Dense(128, activation='relu')(xx)
-xx = Dropout(0.001)(xx)
-xx = Dense(64, activation='relu')(merge1)
-xx = Dense(64, activation='relu')(xx)
-xx = Dropout(0.001)(xx)
 xx = Dense(32, activation='relu')(merge1)
-xx = Dense(32, activation='relu')(xx)
-xx = Dropout(0.001)(xx)
-xx = Dense(16, activation='relu')(xx)
-xx = Dense(8, activation='relu')(xx)
-# xx = Dropout(0.001)(xx)
-xx = Dense(4, activation='relu')(xx)
-xx = Dense(4, activation='relu')(xx)
+# xx = Dense(32, activation='relu')(xx)
+# xx = Dense(16, activation='relu')(xx)
 last_output = Dense(1)(xx)
 
 model = Model(inputs=[input1, input2], outputs=last_output)
@@ -160,8 +131,8 @@ model = Model(inputs=[input1, input2], outputs=last_output)
 model.compile(loss='mse', optimizer='adam')
 
 from keras.callbacks import EarlyStopping, ModelCheckpoint
-es = EarlyStopping(monitor='val_loss', patience=100, 
-            mode='auto', verbose=2, restore_best_weights=True)
+es = EarlyStopping(monitor='val_loss', patience=30, 
+            mode='auto', verbose=1, restore_best_weights=True)
 
 ###################################################################
 # file name auto change and save
@@ -176,23 +147,24 @@ filename = '{epoch:04d}_{val_loss:4f}.hdf5'
 modelpath = "".join([filepath, "SDJ_02_", date_time, "_", filename])
 ###################################################################
 
-mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=2,
+mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
             save_best_only=True, 
             filepath= modelpath)
 
-model.fit([xs_train, xk_train], y_train, epochs=10000, batch_size=64, verbose=1, 
-            callbacks=[es, mcp], validation_split=0.075)
+model.fit([xs_train, xk_train], y_train, epochs=10000, batch_size=256, verbose=1, 
+            callbacks=[es, mcp], validation_split=0.05)
 
 print('=================1. basic print=================')
 # 4. evaluate, predict
 y1_predict= model.predict([xs_test, xk_test])
 # print(y1_predict)
 
-loss = model.evaluate([xs_test, xk_test], y_test, batch_size=32)
+loss = model.evaluate([xs_test, xk_test], y_test)
 print('loss : ', loss)
 
 result = model.predict([xs_pred, xk_pred])
 print('26th start : ',result)
+
 
 '''
 print('=================2. load model=================')
@@ -210,5 +182,6 @@ print('26th start : ',result)
 '''
 
 '''
-
+loss :  3863146.75
+26th start :  [[81010.766]]
 '''
