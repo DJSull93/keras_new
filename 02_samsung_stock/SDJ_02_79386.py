@@ -55,18 +55,19 @@ xs_pred = np.delete(xs_pred, 0, 1)
 xs = np.delete(xs, [-3,-2,-1], axis=0) # (2588, 10, 4) 
 ys = np.delete(ys, [0,1,2], axis=0) # (2588, 10)
 
-# print(xs.shape, ys.shape) #  
+print(xs.shape, ys.shape) #  
 # print(xs[0,:,:]) # ~0715
 # print(ys[0,:]) # ~0720
 # print(ys) # ~0720
 # print(xs_pred) # 0721
-
+'''
 # sk -> k
 xk = sk[:-1,:,[0,1,2,3,4]] # 
 xk_pred = sk[-1,:,:] # 
 xk = np.delete(xk, [-3,-2,-1], axis=0) # (2498, 40, 5)
 
 # print(xs_pred.shape, xk_pred.shape)
+print('shape = ', xs.shape, ys.shape, xk.shape) #  
 
 # train test
 xs_train, xs_test, xk_train, xk_test, y_train, y_test = train_test_split(xs, xk, ys,
@@ -106,6 +107,7 @@ xk_pred = xk_pred.reshape(1, 10, 5)
 # 2. model
 from tensorflow.keras.models import Sequential, Model, load_model
 from tensorflow.keras.layers import Dense, GRU, Dropout, Input, LSTM, GlobalAveragePooling1D, Conv1D, Flatten, MaxPool1D
+'''
 '''
 # 2-1. model1
 input1 = Input(shape=(10,4))
@@ -195,6 +197,7 @@ result = model.predict([xs_pred, xk_pred])
 print('26th start : ',result)
 
 '''
+'''
 print('=================2. load model=================')
 model = load_model('./_save/MCP_M/SDJ_02_0724_1528_0614_1040611.500000.hdf5')
 
@@ -207,7 +210,7 @@ print('loss : ', loss)
 
 result = model.predict([xs_pred, xk_pred])
 print('26th start : ',result)
-
+'''
 
 '''
 loss :  829652.5625
