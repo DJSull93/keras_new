@@ -25,13 +25,13 @@ y_test = to_categorical(y_test) # (25000, 2)
 
 # 2. model
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, Embedding, GRU, Input, Conv1D, GlobalAveragePooling1D
+from tensorflow.keras.layers import Dense, Embedding, GRU, Input, Conv1D, GlobalAveragePooling1D, LSTM
 
 model = Sequential()
 model.add(Embedding(input_dim=10000, output_dim=10, input_length=240))
-model.add(GRU(32, activation='relu'))
-model.add(Dense(100, activation='relu'))
-model.add(Dense(64, activation='relu'))
+model.add(LSTM(32))
+# model.add(Dense(100, activation='relu'))
+# model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(2, activation='sigmoid'))
 
@@ -60,4 +60,8 @@ print('acc : ', loss[1])
 time :  197.96073698997498
 loss :  1.1302212476730347
 acc :  0.7832800149917603
+
+time :  211.79159712791443
+loss :  0.9221745133399963
+acc :  0.8065199851989746
 '''

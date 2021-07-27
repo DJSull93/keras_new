@@ -64,7 +64,7 @@ ys = np.delete(ys, [0,1,2], axis=0) # (2588, 10)
 # sk -> k
 xk = sk[:-1,:,[0,1,2,3,4]] # 
 xk_pred = sk[-1,:,:] # 
-xk = np.delete(xk, [-3,-2,-1], axis=0) # (2498, 40, 5)
+xk = np.delete(xk, [-3,-2,-1], axis=0) # (2588, 10, 5)
 
 # print(xs_pred.shape, xk_pred.shape)
 
