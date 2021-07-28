@@ -75,6 +75,7 @@ es = EarlyStopping(monitor='val_loss', patience=10, mode='min', verbose=1)
 hist = model.fit_generator(xy_train, epochs=50,
  steps_per_epoch=32,
  validation_data=xy_test,
+ validation_steps=4,
  callbacks=[es]) # 32 -> 160/5
 
 acc = hist.history['acc']
