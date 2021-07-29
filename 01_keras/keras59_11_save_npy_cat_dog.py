@@ -50,4 +50,4 @@ print(end_time)
 # print(xy_train[0][0].shape) # (8005, 150, 150, 3)
 # print(xy_train[0][1].shape) # (8005, 2)
 
-# total time : 
+# total time : 90.78798818588257

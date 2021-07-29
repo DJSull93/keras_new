@@ -19,7 +19,7 @@ model.add(MaxPooling2D(2,2))
 model.add(Conv2D(filters = 16, kernel_size=(2,2), activation= 'relu'))
 model.add(Conv2D(filters = 16, kernel_size=(2,2), activation= 'relu'))
 model.add(MaxPooling2D(2,2))
-model.add(Conv2D(filters = 32, kernel_size=(3,3), activation= 'relu'))
+# model.add(Conv2D(filters = 32, kernel_size=(3,3), activation= 'relu'))
 # model.add(Conv2D(filters = 64, kernel_size=(2,2), activation= 'relu'))
 # model.add(Conv2D(filters = 64, kernel_size=(3,3), activation= 'relu'))
 # model.add(MaxPooling2D(2,2))
@@ -58,9 +58,9 @@ val_loss = hist.history['val_loss']
 # print('val_acc : ',val_acc[:-1])
 
 loss = model.evaluate(x_test, y_test)
-print('acc : ',acc[-1])
-print('val_acc : ',val_acc[-1])
-print('loss : ',loss[-1])
+print('acc : ',acc[-10])
+print('val_acc : ',val_acc[-10])
+print('loss : ',loss[-10])
 
 '''
 acc :  0.9811215996742249
