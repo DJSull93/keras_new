@@ -1,11 +1,12 @@
-# make model
-# compare with banila fmnist -> loss, acc, val_loss, val_acc
+# flow to 100,000 
+# make model and compare with banila
+# save_dir -> temp and delete
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.datasets import fashion_mnist
+from tensorflow.keras.datasets import mnist
 import numpy as np
 
-(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
 
 train_datagen = ImageDataGenerator(
     rescale=1./255,
@@ -41,6 +42,7 @@ x_test = x_test.reshape(x_test.shape[0], 28, 28, 1) # (10000, 28, 28, 1)
 x_argmented = train_datagen.flow(x_argmented, 
                                 np.zeros(augment_size),
                                 batch_size=augment_size,
+                                save_to_dir='d:/temp/',
                                 shuffle=False).next()[0]
 
 # print(x_argmented.shape) # (40000, 28, 28, 1)
@@ -118,13 +120,12 @@ print('val_loss : ',val_loss[-10])
 
 '''
 with flow
-acc :  0.8733567595481873
-val_acc :  0.7839999794960022
-val_loss :  0.5647273063659668
+acc :  0.981347382068634
+val_acc :  0.9434000253677368
+val_loss :  0.18445786833763123
 
 without flow
-acc :  0.9346566200256348
-val_acc :  0.9200000166893005
-val_loss :  0.22141651809215546
-
+acc :  0.9975789189338684
+val_acc :  0.9866666793823242
+val_loss :  0.07287737727165222
 '''

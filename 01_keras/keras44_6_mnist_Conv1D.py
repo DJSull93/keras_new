@@ -51,22 +51,27 @@ model.add(Dense(10, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='acc')
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=10, mode='min', verbose=1)
 
 import time
 
 start_time = time.time()
-model.fit(x_train, y_train, epochs=1000, batch_size=256, verbose=2,
-    validation_split=0.025, callbacks=[es])
+hist = model.fit(x_train, y_train, epochs=10000, batch_size=576, verbose=2,
+    validation_split=0.05, callbacks=[es])
 end_time = time.time() - start_time
 
 # 4. predict eval -> no need to
 
-loss = model.evaluate(x_test, y_test)
-print("time : ", end_time)
-print('loss : ', loss[0])
-print('acc : ', loss[1])
+acc = hist.history['acc']
+val_acc = hist.history['val_acc']
+loss = hist.history['loss']
+val_loss = hist.history['val_loss']
 
+loss = model.evaluate(x_test, y_test)
+print('acc : ',acc[-10])
+print('val_acc : ',val_acc[-10])
+# print('loss : ',loss[-10])
+print('val_loss : ',val_loss[-10])
 '''
 CNN Conv1D
 time :  40.72909498214722

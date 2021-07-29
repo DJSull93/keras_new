@@ -1,11 +1,12 @@
-# make model
-# compare with banila fmnist -> loss, acc, val_loss, val_acc
+# flow to 100,000 
+# make model and compare with banila
+# save_dir -> temp and delete
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.datasets import fashion_mnist
+from tensorflow.keras.datasets import cifar10
 import numpy as np
 
-(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
 train_datagen = ImageDataGenerator(
     rescale=1./255,
@@ -21,7 +22,7 @@ train_datagen = ImageDataGenerator(
 
 # test_datagen = ImageDataGenerator(rescale=1./255)
 
-augment_size = 40000
+augment_size = 50000
 
 randidx = np.random.randint(x_train.shape[0], size=augment_size) # take 40000 feature from train in random
 
@@ -32,15 +33,16 @@ randidx = np.random.randint(x_train.shape[0], size=augment_size) # take 40000 fe
 x_argmented = x_train[randidx].copy()
 y_argmented = y_train[randidx].copy()
 
-x_argmented = x_argmented.reshape(x_argmented.shape[0], 28, 28, 1) # (40000, 28, 28, 1)
-x_train = x_train.reshape(x_train.shape[0], 28, 28, 1) # (60000, 28, 28, 1)
-x_test = x_test.reshape(x_test.shape[0], 28, 28, 1) # (10000, 28, 28, 1)
+x_argmented = x_argmented.reshape(x_argmented.shape[0], 32, 32, 3) # (40000, 28, 28, 1)
+x_train = x_train.reshape(x_train.shape[0], 32, 32, 3) # (60000, 28, 28, 1)
+x_test = x_test.reshape(x_test.shape[0], 32, 32, 3) # (10000, 28, 28, 1)
 
 # print(x_argmented.shape, x_train.shape)
 
 x_argmented = train_datagen.flow(x_argmented, 
                                 np.zeros(augment_size),
                                 batch_size=augment_size,
+                                # save_to_dir='d:/temp/',
                                 shuffle=False).next()[0]
 
 # print(x_argmented.shape) # (40000, 28, 28, 1)
@@ -51,16 +53,16 @@ y_train = np.concatenate((y_train, y_argmented)) # (100000,)
 # print(x_train.shape, y_train.shape)
 
 # from 44_7
-x_train = x_train.reshape(100000, 28*28) # (100000, 28, 28, 1)
-x_test = x_test.reshape(10000, 28*28) # (10000, 28, 28, 1)
+x_train = x_train.reshape(100000, 32*32*3) # (100000, 28, 28, 1)
+x_test = x_test.reshape(10000, 32*32*3) # (10000, 28, 28, 1)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
 scaler = QuantileTransformer()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test) 
 
-x_train = x_train.reshape(100000, 28, 28) # (100000, 28, 28, 1)
-x_test = x_test.reshape(10000, 28, 28) # (10000, 28, 28, 1)
+x_train = x_train.reshape(100000, 32*32, 3) # (100000, 28, 28, 1)
+x_test = x_test.reshape(10000, 32*32, 3) # (10000, 28, 28, 1)
 
 from sklearn.preprocessing import OneHotEncoder
 one = OneHotEncoder()
@@ -76,7 +78,7 @@ from tensorflow.keras.layers import Dense, Conv1D, Flatten, MaxPool1D, GlobalAve
 
 model = Sequential()
 model.add(Conv1D(filters=32, kernel_size=2, padding='same',                        
-                        activation='relu' ,input_shape=(28, 28))) 
+                        activation='relu' ,input_shape=(32*32, 3))) 
 model.add(Conv1D(32, 2, padding='same', activation='relu'))                   
 model.add(MaxPool1D())                                         
 model.add(Conv1D(64, 2, padding='same', activation='relu'))                   
@@ -118,13 +120,8 @@ print('val_loss : ',val_loss[-10])
 
 '''
 with flow
-acc :  0.8733567595481873
-val_acc :  0.7839999794960022
-val_loss :  0.5647273063659668
+
 
 without flow
-acc :  0.9346566200256348
-val_acc :  0.9200000166893005
-val_loss :  0.22141651809215546
 
 '''

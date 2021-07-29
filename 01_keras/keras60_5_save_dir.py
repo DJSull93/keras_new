@@ -1,9 +1,11 @@
 # make model
-# compare with banila fmnist -> loss, acc, val_loss, val_acc
+# save flowed data 
+# -> save_to_dir='d:/temp/'
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.datasets import fashion_mnist
 import numpy as np
+import time
 
 (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
 
@@ -20,8 +22,8 @@ train_datagen = ImageDataGenerator(
 )
 
 # test_datagen = ImageDataGenerator(rescale=1./255)
-
-augment_size = 40000
+start_time = time.time()
+augment_size = 400
 
 randidx = np.random.randint(x_train.shape[0], size=augment_size) # take 40000 feature from train in random
 
@@ -41,10 +43,17 @@ x_test = x_test.reshape(x_test.shape[0], 28, 28, 1) # (10000, 28, 28, 1)
 x_argmented = train_datagen.flow(x_argmented, 
                                 np.zeros(augment_size),
                                 batch_size=augment_size,
-                                shuffle=False).next()[0]
+                                shuffle=False,
+                                save_to_dir='d:/temp/'
+                                ) # .next()[0] -> next() 생략 시 , iterator 는 호출 된 만큼 순차적으로 돌고, augment_size수 *호출 수 만큼 저장
+                                 
+end_time = time.time() - start_time
+print(x_argmented[0][0].shape) # (40000, 28, 28, 1)
+print(x_argmented[0][1].shape) # (40000, 28, 28, 1)
 
-# print(x_argmented.shape) # (40000, 28, 28, 1)
+print('end time : ', end_time)
 
+'''
 x_train = np.concatenate((x_train, x_argmented)) # (100000, 28, 28, 1) 
 y_train = np.concatenate((y_train, y_argmented)) # (100000,)
 
@@ -115,16 +124,7 @@ print('acc : ',acc[-10])
 print('val_acc : ',val_acc[-10])
 # print('loss : ',loss[-10])
 print('val_loss : ',val_loss[-10])
-
 '''
-with flow
-acc :  0.8733567595481873
-val_acc :  0.7839999794960022
-val_loss :  0.5647273063659668
-
-without flow
-acc :  0.9346566200256348
-val_acc :  0.9200000166893005
-val_loss :  0.22141651809215546
+'''
 
 '''
