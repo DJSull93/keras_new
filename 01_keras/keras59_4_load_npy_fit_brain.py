@@ -40,11 +40,11 @@ val_loss = hist.history['val_loss']
 
 # visualize upper data
 
-# print('val_acc : ',val_acc[:-1])
 
 loss = model.evaluate(x_test, y_test)
-print('acc : ',acc[-1])
-print('loss : ',loss[0])
+print('acc : ',acc[-10])
+print('loss : ',loss[-1])
+print('val_acc : ',val_acc[-10])
 '''
 acc :  0.9921875
 

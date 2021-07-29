@@ -83,9 +83,6 @@ model.add(Conv1D(32, 2, padding='same', activation='relu'))
 model.add(MaxPool1D())                                         
 model.add(Conv1D(64, 2, padding='same', activation='relu'))                   
 model.add(Conv1D(64, 2, padding='same', activation='relu'))    
-model.add(MaxPool1D())                                         
-model.add(Conv1D(128, 3, padding='same', activation='relu'))                   
-model.add(Conv1D(128, 3, padding='same', activation='relu'))    
 model.add(Flatten())                                              
 model.add(Dense(256, activation='relu'))
 model.add(Dense(124, activation='relu'))
@@ -120,8 +117,12 @@ print('val_loss : ',val_loss[-10])
 
 '''
 with flow
-
+acc :  0.7419999837875366
+val_acc :  0.6362000107765198
+val_loss :  1.054795503616333
 
 without flow
-
+acc :  0.7980841994285583
+val_acc :  0.6344000101089478
+val_loss :  1.1285284757614136
 '''

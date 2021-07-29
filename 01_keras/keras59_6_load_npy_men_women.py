@@ -61,9 +61,9 @@ print('acc : ',acc[-1])
 print('loss : ',loss[0])
 print('val_acc : ',val_acc[-1])
 
-y_predict = model.predict([x_pred])
-res = (1-y_predict) * 100
-print('남자일 확률 : ',res, '%')
+# y_predict = model.predict([x_pred])
+# res = (1-y_predict) * 100
+# print('남자일 확률 : ',res, '%')
 
 
 '''
