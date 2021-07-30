@@ -1,3 +1,11 @@
+'''
+앞선 코드들에서 학습과 검증 세트를 일일히 나눴지만 
+우리가 생각할때 불편하여 함수로 개선하고 싶은 것들은 
+대부분 모두 나와있으며, 불러와서 사용만 하면 됨
+
+-> train_test_split 함수
+'''
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import numpy as np
@@ -5,14 +13,21 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 
 # 1. 데이터
-# train, test로 일부 데이터는 훈련용으로 사용함
-# model 성능 향상을 위함
-# default shuffle = true
 x = np.array(range(100))
 y = np.array(range(1, 101))
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
       test_size=0.3, shuffle=True, random_state=66)
+'''
+사용법은 다음과 같음. 각 x, y 학습, 테스트 데이터 에 함수를 통해 데이터 셋을 
+분리 후 각각에 지정해줌
+
+default shuffle = true
+default test_size = 0.25
+수업에서 default에 대한 학습은 지속적으로 이뤄짐.
+default에 대한 학습은 기본적으로 파라미터 튜닝을 할 때,
+default값은 평타는 가는 성능을 보여주므로 이해를 필요로함.
+'''
 
 print(x_test) 
 # [47 64 55 20 62 78  6 22 97 59 70 57 80 67 14 48 29 86 32 35 21 

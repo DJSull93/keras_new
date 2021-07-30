@@ -3,6 +3,16 @@ from tensorflow.keras.layers import Dense
 import numpy as np
 import matplotlib.pyplot as plt
 
+'''
+앞서 학습한 train_test_split 학습에서 연장선
+
+마찬가지로 훈련 중에도 과적합이 올 수 있으므로, 
+validation, 검증 데이터 세트를 구성하여, 
+
+모델을 훈련하는 도중 자체적으로 검증데이터와 비교를 통해
+모델의 정확도를 높일 수 있으므로 사용함
+'''
+
 # 1. 데이터
 x_train = np.array([1,2,3,4,5,6,7]) # 훈련
 y_train = np.array([1,2,3,4,5,6,7])
@@ -10,7 +20,7 @@ x_test = np.array([8,9,10])         # 평가
 y_test = np.array([8,9,10])
 x_val = np.array([11, 12, 13])
 y_val = np.array([11, 12, 13])
-
+# 검증 데이터셋 구성
 
 # 2. 모델 구성
 model = Sequential()

@@ -4,7 +4,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
+'''
+기존 평가지표로 loss를 사용하였으나, 앞으로 다양한 모델과 데이터를 
+다룸에 있어 마찬가지로 다양한 지표로 모델의 정확성을 측정하게 됨.
 
+그중 일부인 y의 테스트데이터와 예측데이터간의 관계 지표로 활용되는 
+r2_score를 학습하는 단계.
+
+또한, loss 에서 사용하던 mse 외에도 mae, rmse 등 다양한 지표가 존재함
+각각에 대한 설명은 구글링을 통해 간략히 학습할 것.
+
+r2_score에 대한 자세한 설명은 7월9일자 노트필기 참조할 것 
+'''
 # 1. 데이터
 # train, test로 일부 데이터는 훈련용으로 사용함
 # model 성능 향상을 위함
@@ -49,6 +60,9 @@ print('100의 예측값 : ', y_predict)
 
 r2 = r2_score(y_test, y_predict)
 print('R^2 score : ', r2)
+# 기존의 모델에 r2_score 지표를 추가, 결과 R^2 score :  0.9988562899295829
+# r2_score는 1에 가까울 수록 모델이 정확함을 나타내는 지표이다.
+
 
 # # 5. 시각화
 # y_predict = model.predict(x)

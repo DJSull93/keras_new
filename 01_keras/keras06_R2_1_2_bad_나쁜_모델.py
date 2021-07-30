@@ -7,6 +7,12 @@
 # 6. 히든레이어의 노드는 10개 이상 1000개 이하
 # 7. train 70%
 
+'''
+기존 모델에서 의도적으로 모델의 구성을 망쳐, 정확도를 낮추는 과제로,
+선생님의 의도는 이렇게 모델을 구성할 시 정확도가 떨어지므로 
+모델 구성을 이렇게 하지 마라는 뜻이 담겨있음.
+'''
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import numpy as np

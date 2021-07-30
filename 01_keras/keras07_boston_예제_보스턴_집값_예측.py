@@ -1,3 +1,9 @@
+'''
+첫 예제인 보스턴 집값 예측문제. 앞으로 이러한 예저들은 
+반복적으로 다양한 툴로 재활용하므로 대략적인 이해를 요망함.
+'''
+
+
 # 과제 3 0709
 # boston housing 
 # loss, R2 print
@@ -7,15 +13,22 @@ from tensorflow.keras.layers import Dense
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import datasets
-from sklearn.datasets import load_boston
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
+from sklearn.datasets import load_boston
+# 데이터셋은 sklearn에서 예제를 제공하므로, load_boston로 불러옴
 
 datasets = load_boston()
+# 임포트한 데이터를 datasets으로 지정
 
 x = datasets.data # (506, 13) input_dim = 13
 y = datasets.target # (506,) output_dim = 1
+'''
+각각의 데이터는 이미 지정이 되어있음, 사용법은 위처럼 datasets의 data과,
+target으로 분류하여 x, y에 지정
 
+이후 모델 구성 및 컴파일, 훈련, 예측, 평가는 동일함
+'''
 x_train, x_test, y_train, y_test = train_test_split(x, y,
       test_size=0.1, shuffle=True, random_state=12)
 

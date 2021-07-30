@@ -20,3 +20,8 @@ print('6의 예측값 : ', y_predict)
 
 r2 = r2_score(y, y_predict)
 print('R^2 score : ', r2)
+
+# 01_1과 유사하나, 데이터셋의 구조가 어긋나 있을때 얼마나 훈련 결과가 엉망이 되는지 보여줌
+# -> 정제된 데이터 셋의 준비가 중요함!!!
+
+# Preprocessing = 전처리 

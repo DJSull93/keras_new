@@ -23,19 +23,39 @@ model.add(Dense(5))
 model.add(Dense(5))
 model.add(Dense(1))
 
+'''
+모델 훈련을 진행 시, 너무 많은 정보를 표기하며, 이는 성능에 영향을 미칠 
+수도 있음. 따라서 verbose 파라미터에 값을 지정하여 표시되는 범위 설정 가능
+0 -> 생략
+1 -> 기본값
+2 -> 축약
+'''
+
 # 3. 컴파일, 훈련
-# metrics = 반영은 없으나 지표 표현
-# loss :  [0.014884325675666332, 0.0939272865653038]
-# 두개 이상은 list로 표현
-# mse = Mean Square error
-# mae = Mean Absolute error
-# rmse = Root mse 
-model.compile(loss='mse', optimizer='adam', metrics=['mae'])
+# time.time() 으로 수행 시간 측정
+model.compile(loss='mse', optimizer='adam')
 start = time.time()
-model.fit(x1, y1, epochs=100, batch_size=1, verbose=1)
+model.fit(x1, y1, epochs=1000, batch_size=1, verbose=0)
 end = time.time() - start
 print("걸린 시간 : ", end)
 
+
+"""
+batch = 1
+epo = 1000
+v = 0 걸린 시간 :  18.73912239074707
+v = 1 걸린 시간 :  24.556628227233887
+v = 2 걸린 시간 :  21.374227046966553
+v = 3 걸린 시간 :  20.799005031585693
+"""
+"""
+batch = 10
+epo = 1000
+v = 0 
+v = 1 
+v = 2 
+v = 3 
+"""
 # verbose / 출력 양 설정
 # 0 -> hide
 # 1 -> show
@@ -43,10 +63,11 @@ print("걸린 시간 : ", end)
 # 3 -> epo only
 
 # 4. 평가 예측
-loss = model.evaluate(x1, y1)
-print('loss : ', loss)
-y_pred = model.predict(x1)
-print('[10, 1.3, 1]의 예측값 : ', y_pred)
+# x_pred = np.array([[10, 1.3, 1]])
+# loss = model.evaluate(x1, y1)
+# print('loss : ', loss)
+# result = model.predict(x_pred)
+# print('[10, 1.3, 1]의 예측값 : ', result)
 
 # 5. 시각화
 # y_predict = model.predict(x1)
