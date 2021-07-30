@@ -21,6 +21,13 @@ y = datasets.target # (506,) output_dim = 1
 x_train, x_test, y_train, y_test = train_test_split(x, y,
       test_size=0.1, shuffle=True, random_state=12)
 
+'''
+데이터 전처리를 경험해봤고, 역시나 불편하고 쉽지 않은건 이미 함수로 
+다 나와있다.
+
+이제 다양한 전처리 함수에 대해 알아보자.
+'''
+
 # x_train에 대해 fit 한 scaler를 x_test에 적용
 # 컬럼별 minmax -> sklearn.preproccessing
 from sklearn.preprocessing import MinMaxScaler
@@ -29,9 +36,13 @@ scaler.fit(x_train)
 x_train = scaler.transform(x_train) 
 x_test = scaler.transform(x_test) 
 '''
-x_val = scaler.transform(x_val) 
-x_pred = scaler.transform(x_pred) 
+사용법은 위와 같다.
+먼저 호출해주고, 스케일러를 지정 후 
+##### 같은 길이를 가지는게 중점 ##### 이므로 
+학습 데이터에 스케일러를 훈련시키고 (35라인)
+그 결과를 바탕으로 학습, 테스트 세트를 적용한다 (36,37라인)
 '''
+
 
 # print(x.shape)
 # print(y.shape)

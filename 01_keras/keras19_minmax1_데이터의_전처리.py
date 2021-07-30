@@ -13,6 +13,20 @@ datasets = load_boston()
 x = datasets.data # (506, 13) input_dim = 13
 y = datasets.target # (506,) output_dim = 1
 '''
+$$$ 중요 포인트
+
+모델의 정확도를 높이는 작업은 
+
+1. 파라미터 튜닝
+2. 전처리
+
+두개로 크게 나뉨
+
+여태까지 파라미터 튜닝을 주로 배워왔고, 이제 데이터의 전처리에 대해 
+학습한다고 생각할 것 
+
+
+-> MinMaxScaler
 데이터가 양의 정수 이므로 연산 많아질수록 데이터 값 폭증
 0~1 사이의 수로 데이터의 변환 필요하나, 데이터 조작임
 때문에 시작 시 데이터 변환, 종료 후 환원 필요
@@ -22,10 +36,17 @@ x data 0~1 변환 : data preprocessing 전처리
 
 => MinMaxScaler / normalization 정규화 中 하나
 (x-np.min(x))/(np.max(x)-np.min(x))
+
 '''
 
 x = x/np.max(x)
+'''
+단순히 행렬의 가장 큰 값으로 나누어 데이터를 0~1 사이값으로 변환
 
+하지만 이렇게 단순히 작업하면 학습, 테스트 세트에 최댓값, 최솟값이 포함이 
+안될 수 도 있고, 이러면 데이터 셋들이 0~1이라는 1의 길이가 아닌
+다른 길이를 가질 수 있음. 따라서 차후 더 좋은 도구를 배워야함
+'''
 # print(np.min(x), np.max(x)) # 0.0 711.0
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,

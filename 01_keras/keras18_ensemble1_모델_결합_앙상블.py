@@ -1,6 +1,22 @@
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 import numpy as np
+'''
+함수형 모델이 시퀀셜 모델과 가장 큰 차이점을 가지는게 바로 앙상블이다.
+
+앙상블은 다수의 모델을 엮어 단수 혹은 다수의 결과를 반환할 수 있는, 
+모델의 형태이며, 7월13일 노트필기에서 직관적인 형태를 확인하기 바람
+
+앙상블의 주된 목적은 예를 들어 삼성전자의 주가와 기후 데이터라는 
+전혀 관계 없어 보이는 두 x값으로 내일의 삼성전자주가(y)를 예측하는,
+
+다수의 데이터셋으로 예측의 정확도를 향상시키는 기법을 뜻한다.
+
+이어지는 하위 번호들의 앙상블 예시는
+다수 - 단수, 다수 - 다수 등 여러 기법들에 대한 실습으로 
+사용법에 대한 학습이다
+
+'''
 
 # 1. data
 # x1 기상청 (온도, 습도, 불쾌지수), x2 주가 (삼전, SK, Kakao)
@@ -42,6 +58,13 @@ merge2 = Dense(10)(merge1)
 merge3 = Dense(5, activation='relu')(merge2)
 last_output = Dense(1)(merge3)
 
+'''
+사용법은 상단과 같다. 모델을 1, 2 각각 지정해주고, 하단에 concatenate를 사용해
+두 모델을 하나로 합쳐준다. 물론 concatenate도 하나의 레이어고, 
+이에 따른 이후의 추가적인 모델을 붙여 연산을 할 수도 있다.
+
+
+'''
 
 model = Model(inputs=[input1, input2], outputs=last_output)
 

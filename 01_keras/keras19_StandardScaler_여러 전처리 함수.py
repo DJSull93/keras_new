@@ -8,7 +8,15 @@ from sklearn import datasets
 from sklearn.datasets import load_boston
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
+'''
+앞서 사용한 민맥스 처럼 스탠다드라는 것도 있다. 
 
+각각의 전처리 함수는 과제모음의 7월 14일자를 참조하자
+
+사용법은 동일하며, 모델마다 꼭 명시된 것처럼 사용법이 강제되지 않고, 
+
+정확도 또한 여러가지 써봐야 뭐가 좋은지 알 수 있다
+'''
 # 1. data
 datasets = load_boston()
 

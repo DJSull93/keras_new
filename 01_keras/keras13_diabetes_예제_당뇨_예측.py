@@ -7,6 +7,16 @@ from sklearn.datasets import load_diabetes
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
 
+'''
+두번째 예제 문제인 당뇨병 예측 데이터셋.
+
+기본적인 사용법은 보스턴 집값예측과 유사하므로 코드를 천천히 보고
+
+실습을 해보는 것을 추천함. 
+
+마찬가지로 앞으로 계속 나옴
+'''
+
 # R2 0.62 이상
 # 1. data 구성
 datasets = load_diabetes()
