@@ -1,3 +1,19 @@
+'''
+# 1 early stopping
+앞선 학습에서 실습을 하다 보면, 얼만큼 epochs를 지정해야 
+좋은 지표값을 얻을 수 있는지 감이 오긴 할테지만 
+
+여전히 불편하고 정확히 얼만큼 줘야할지 판단이 서지 않는다.
+
+따라서 최적의 지표를 찾았을때, 자동으로 멈춰주는 함수에 대해 공부한다
+
+# 2 hist
+또한 우리가 여태 구한 지표들은 어딘가에 저장될텐데 최후값만을 반환하므로 
+이전 값들에 대한 활용이 필요할 때 쓰기 힘들다.
+
+때문에 model.fit의 이전 지표값들을 저장하는 법을 학습한다.
+'''
+
 # Early Stopping 
 # parameter setting -> loss 최소치 감지 시 정지 
 
@@ -54,6 +70,21 @@ model.add(Dense(1))
 # 3. complile train
 model.compile(loss='mse', optimizer='adam')
 # Earlysttoping 도 verbose 존재 
+
+'''
+# 1. 
+EarlyStopping 은 학습 도중에 최적의 웨이트를 찾았을때 멈추므로 
+fit(학습)에서 파라미터로 지정할 수 있다. 얼리스탑을 따로 함수로 지정하고, 
+모니터할 지표, 몇번 동안 최적의 값이 갱신되지 않으면 멈출지, 그게 최소인지 최대인지, 시각화를 몇번으로 할건지
+정할 수 있다.
+
+그리고 fit에서 callbacks으로 얼리스탑을 호출한다. 
+
+-> 리스트인거 보면 다양한 함수를 호출해서 쓸 수 있음을 유추할 수 있다
+
+# 2. 
+또한 fit(학습)은 hist에 저장하여 리스트 형태로 지표값들을 저장할 수 있다.
+'''
 from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_loss', patience=3, mode='min', verbose=1)
 
