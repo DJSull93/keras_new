@@ -73,13 +73,13 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D
 
 model = Sequential()
-model.add(Conv2D(filters = 32, kernel_size=(3,3), input_shape =(150,150,3), activation= 'relu'))
-model.add(Conv2D(filters = 32, kernel_size=(3,3), activation= 'relu'))
+model.add(Conv2D(filters = 64, kernel_size=(3,3), input_shape =(150,150,3), activation= 'relu'))
+model.add(Conv2D(filters = 64, kernel_size=(3,3), activation= 'relu'))
 model.add(MaxPooling2D(2,2))
-model.add(Conv2D(filters = 16, kernel_size=(2,2), activation= 'relu'))
-model.add(Conv2D(filters = 16, kernel_size=(2,2), activation= 'relu'))
+model.add(Conv2D(filters = 32, kernel_size=(2,2), activation= 'relu'))
+model.add(Conv2D(filters = 32, kernel_size=(2,2), activation= 'relu'))
 model.add(MaxPooling2D(2,2))
-model.add(Conv2D(filters = 32, kernel_size=(3,3), activation= 'relu'))
+# model.add(Conv2D(filters = 32, kernel_size=(3,3), activation= 'relu'))
 model.add(Flatten())
 model.add(Dense(111, activation= 'relu'))
 model.add(Dense(64, activation= 'relu'))
@@ -115,6 +115,9 @@ print('val_loss : ',val_loss[-1])
 '''
 with flow
 acc :  0.8311966061592102
+val_acc :  0.3617021143436432
+
+acc :  0.7606837749481201
 val_acc :  0.3617021143436432
 
 without flow
