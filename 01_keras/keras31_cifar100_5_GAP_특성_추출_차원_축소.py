@@ -1,4 +1,12 @@
 # Global Average Pooling
+'''
+Conv2D 는 4차원 데이터 입력, 최종 레이어인 Dense는 2차원 입력이므로
+Flatten으로 2차원 변환이 필요했으나, GlobalAveragePooling을 통해
+MaxPool과 유사하게 특성값을 추출한 상태로 2차원변환 가능
+
+Flatten : 4차원 데이터 -> 단순 나열을 통해 2차원 변환
+GlobalAveragePooling : 4차원 데이터 -> 특성 추출로 차원 축소
+'''
 
 # example cifar100
 

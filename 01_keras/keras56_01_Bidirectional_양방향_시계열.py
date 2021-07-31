@@ -1,4 +1,3 @@
-# LSTM 시계열 끝판왕 
 
 import numpy as np
 from tensorflow.keras.models import Sequential

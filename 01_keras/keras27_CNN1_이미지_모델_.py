@@ -1,3 +1,14 @@
+'''
+이미지 -> (사진의 개수, 가로픽셀, 세로픽셀, 흑백(1)/컬러(3))
+: 4차원 데이터
+
+convolution layer -> CNN
+
+Conv2D -> 2차원 이미지 작업에 사용되며, 입력 차원은 4차원
+
+'''
+
+
 # image process, CCN -> Conv2D (for image)
 
 from tensorflow.keras.models import Sequential

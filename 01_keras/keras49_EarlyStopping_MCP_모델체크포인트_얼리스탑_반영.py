@@ -1,3 +1,8 @@
+'''
+모델 훈련에 파라미터로 모델 체크포인트 대입
+-> 얼리스탑 반영한 모델체크포인트 저장
+'''
+
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 import numpy as np

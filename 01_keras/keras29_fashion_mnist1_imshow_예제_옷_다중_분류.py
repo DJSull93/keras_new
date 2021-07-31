@@ -17,3 +17,4 @@ print("y[0] value", y_train[3]) # y[0] value 5 ; means x_train[0] = 5
 
 plt.imshow(x_train[3], 'gray')
 plt.show()
+

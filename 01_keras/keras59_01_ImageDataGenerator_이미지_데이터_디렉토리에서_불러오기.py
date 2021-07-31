@@ -1,3 +1,11 @@
+'''
+캐글 뇌 CT사진 데이터 
+
+ImageDataGenerator로 호출하여 x,y결합된 데이터셋 반환
+
+'''
+
+
 # OpenCV -> 찾아볼것
 
 import numpy as np

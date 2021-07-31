@@ -1,3 +1,7 @@
+'''
+2차원의 데이터도 reshape로 차원 증폭하여 다른 레이어에 사용 가능
+'''
+
 # boston 
 # make model to CNN
 

@@ -1,3 +1,14 @@
+'''
+데이터가 순서에 따라 상관관계가 존재 : 시계열 데이터
+이전 데이터가 다음 데이터에 영향을 끼치므로 
+전의 가중치가 다음 연산의 가중치에 매개함수로 포함되어야함
+
+RNN(시계열) -> LSTM, GRU, simpleRNN 세가지 실습 예정
+
+$ RNN(시계열)은 통과 후 차원이 자동으로 축소됨
+3차원 -> 2차원
+'''
+
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, SimpleRNN

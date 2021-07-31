@@ -1,3 +1,16 @@
+
+'''
+텐서보드 결과 확인 프로세스
+cmd
+d:
+cd study
+cd _save
+cd _graph
+dir/w
+tensorboard --logdir=.
+http://localhost:6006/
+'''
+
 from tensorflow.keras.callbacks import EarlyStopping, TensorBoard
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
@@ -38,14 +51,3 @@ y_predict = model.predict(x)
 # plt.scatter(x,y)
 # plt.plot(x,y_predict, color='red')
 # plt.show()
-
-'''
-cmd
-d:
-cd study
-cd _save
-cd _graph
-dir/w
-tensorboard --logdir=.
-http://localhost:6006/
-'''

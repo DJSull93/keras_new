@@ -1,4 +1,8 @@
-# pred 80  
+'''
+시계열 레이어 또한 함수형 모델로 구성 가능
+'''
+
+# GRU in func
 
 import numpy as np
 
@@ -13,21 +17,21 @@ x_predict = np.array([50,60,70])
 x_predict = x_predict.reshape(1, x_predict.shape[0], 1)
 # print(x.shape, y.shape)
 
-# x = x.reshape(13, 3, 1) # (batch_size, timesteps, feature)
 x = x.reshape(x.shape[0], x.shape[1], 1)
 
 # 2. model
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, GRU, Dropout
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Dense, GRU, Dropout, Input
 
-model = Sequential()
-model.add(GRU(units=20, activation='relu', input_shape=(3, 1)))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(128, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(32, activation='relu'))
-# model.add(Dense(16, activation='relu'))
-model.add(Dense(1))
+input1 = Input(shape=(3, 1))
+xx = GRU(units=20, activation='relu', input_shape=(3, 1))(input1)
+xx = Dense(256, activation='relu')(xx)
+xx = Dense(128, activation='relu')(xx)
+xx = Dense(64, activation='relu')(xx)
+xx = Dense(32, activation='relu')(xx)
+output1 = Dense(1)(xx)
+
+model = Model(inputs=input1, outputs=output1)
 
 # 3. compile train
 
@@ -43,10 +47,9 @@ y_pred = model.predict(x_predict)
 print('y_pred : ', y_pred) 
 
 '''
-units : 20
-y_pred :  [[80.289474]]
-y_pred :  [[80.21963]]
-
 epo = 1000
 y_pred :  [[80.023636]]
+
+func
+y_pred :  [[80.26175]]
 '''

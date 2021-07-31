@@ -1,3 +1,19 @@
+'''
+모델과 파라미터가 동일해도 학습마다 결과가 다름
+
+따라서 대회 제출 등 최적의 웨이트를 찾아도 다시금 구현이 어려움
+
+-> 모델 세이브, 모델 체크포인트 활용, 최적의 웨이트 및 모델 저장
+-> 불러오기를 통해 재구현 가능
+
+save model : after model -> 단순히 모델만 저장, 웨이트 재학습 필요
+save model : after fit -> 학습한 웨이트값 저장, 얼리스탑 무시
+Model Check Point : in fit-> 매 에포당 최적의 웨이트 값 갱신 시 저장
+
+모델 저장에는 상단의 세가지가 존재하며 사용법이 다르나, 
+사용시 얼리스탑의 결과를 반영하는 Model Check Point이 사용에 적합
+'''
+
 # example cifar100
 
 from tensorflow.keras.datasets import cifar100, mnist

@@ -1,3 +1,7 @@
+'''
+RNN레이어는 디폴트로 차원을 축소시켜 중첩이 불가능해 보임
+-> return_sequences=True 로 차원 유지 가능함 : 튜닝 대상인 파라미터
+'''
 # pred 80  
 
 import numpy as np

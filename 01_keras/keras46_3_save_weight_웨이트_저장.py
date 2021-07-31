@@ -1,3 +1,7 @@
+'''
+save model과 유사하게 웨이트만 저장 가능
+'''
+
 import numpy as np
 from sklearn import datasets
 from sklearn.datasets import load_diabetes

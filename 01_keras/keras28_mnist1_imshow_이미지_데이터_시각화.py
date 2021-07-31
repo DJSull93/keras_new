@@ -11,3 +11,10 @@ print("y[0] value", y_train[111]) # y[0] value 5 ; means x_train[0] = 5
 
 plt.imshow(x_train[111], 'gray')
 plt.show()
+
+'''
+예제 : 수기 숫자 데이터 다중 분류
+
+이미지 데이터 시각화로 확인
+실행 시 x_train의 111번째 이미지 시각화
+'''

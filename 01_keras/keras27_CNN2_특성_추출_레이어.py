@@ -1,3 +1,16 @@
+'''
+(N, x, y, z) -MaxPool layer-> (N, x/2, y/2, z)
+: 각 x, y 개의 픽셀 이미지를 반으로 줄이며, 최대 특성값만을 
+반영, 4개의 최소단위를 1개로 축소 
+: 기존 크기의 1/4로 크기 축소
+
+12 | 24     ->      24
+21 | 11 
+
+(2, 2) 형태의 행렬 에서 최대값 24 제외 생략, 순차적으로 전체 데이터에
+적용하는 형태
+'''
+
 # image process, CCN -> Conv2D (for image)
 # maxpooling -> shape will de shrink by half -> only tskes max values in cut part
 # 통상 2번 conv 하고 maxpool 1번 사용

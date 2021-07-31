@@ -1,3 +1,8 @@
+'''
+텍스트 데이터 학습을 위해 텍스트를 연산 가능한 정수로 변환
+Tokenizer : 빈도 많은 단어 우선, 이후 순차적으로 단어 정수로 변환
+'''
+
 from tensorflow.keras.preprocessing.text import Tokenizer
 
 text = '나는 진짜 매우 맛있는 밥을 진짜 마구 마구 먹었다.'

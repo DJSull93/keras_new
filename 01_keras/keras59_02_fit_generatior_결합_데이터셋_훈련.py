@@ -1,4 +1,7 @@
-# OpenCV -> 찾아볼것
+'''
+fit -> x_train, y_train
+fir_generator -> xy_train
+'''
 
 import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator

@@ -1,3 +1,9 @@
+'''
+sparse_categorical_crossentropy
+
+categorical_crossentropy과 유사하나, 원핫인코딩 불필요한 손실함수
+'''
+
 # mnist example 
 # acc upper than 0.98 
 

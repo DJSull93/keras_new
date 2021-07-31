@@ -1,3 +1,26 @@
+'''
+# 1
+'다중분류 -> onehotincoding' 처럼 토큰화된 정수들은 서로 상관관계가
+존재해서는 연산 결과 부정확
+
+-> Embedding 레이어는 자동으로 토큰 값들을 의미를 행렬에 배치하여 
+정수가 아닌 좌표값으로 반환하여 상관관계 제거
+
+# 2
+텍스트 데이터는 각각의 행이 길이가 다름 
+'철수는 바보'
+'밥은 먹고 다니냐'
+'긴 가방 끈 가방이 좋을까 아니면 짧은 가방 끈 가방이 좋을까'
+
+토큰화할 시 각 행들의 요소 수 다름 -> 넘파이 변환 필요
+
+pad_sequences -> 지정한 수의 단어 수 만큼 
+            초과 요소 수 : 앞부터, 뒤부터 지정하여 자름
+            미만 요소 수 : 0으로 앞부터 채워 지정한 수에 맞춤
+-> 행렬 형태로 반환
+
+'''
+
 from tensorflow.keras.preprocessing.text import Tokenizer
 import numpy as np
 from tensorflow.python.keras.layers.recurrent import LSTM

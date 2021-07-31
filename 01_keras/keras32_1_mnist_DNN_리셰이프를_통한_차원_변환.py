@@ -1,3 +1,10 @@
+'''
+Dense, Conv2D는 입력 차원이 다르고, 특성이 달라 사용처가 다르지만
+데이터셋에 강제되는 레이어는 없음
+
+-> reshape로 차원을 바꿔 다양한 레이어를 사용해볼 수 있음
+'''
+
 # mnist example 
 # make perfect model in DNN
 
@@ -11,6 +18,12 @@ from tensorflow.keras.datasets import mnist
 
 x_train = x_train.reshape(60000, 28*28*1)
 x_test = x_test.reshape(10000, 28*28*1)
+
+'''
+전처리 함수는 2차원만을 받아들임
+
+reshape로 차원 축소
+'''
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
 scaler = QuantileTransformer()
