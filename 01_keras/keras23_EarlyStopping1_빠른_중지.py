@@ -74,16 +74,18 @@ model.compile(loss='mse', optimizer='adam')
 '''
 # 1. 
 EarlyStopping 은 학습 도중에 최적의 웨이트를 찾았을때 멈추므로 
-fit(학습)에서 파라미터로 지정할 수 있다. 얼리스탑을 따로 함수로 지정하고, 
-모니터할 지표, 몇번 동안 최적의 값이 갱신되지 않으면 멈출지, 그게 최소인지 최대인지, 시각화를 몇번으로 할건지
-정할 수 있다.
+fit(학습)에서 파라미터로 지정할 수 있음
 
-그리고 fit에서 callbacks으로 얼리스탑을 호출한다. 
+얼리스탑을 함수로 지정하고, 모니터할 지표, 지표의 최소 혹은 최대 모니터링, 
+몇번 동안 최적의 값이 갱신되지 않으면 멈출지, 로그 표기 방식
+튜닝 가능
 
--> 리스트인거 보면 다양한 함수를 호출해서 쓸 수 있음을 유추할 수 있다
+-->  fit에서 callbacks으로 얼리스탑을 호출
+
+--> 리스트 형태로, 다양한 함수를 호출해서 쓸 수 있음
 
 # 2. 
-또한 fit(학습)은 hist에 저장하여 리스트 형태로 지표값들을 저장할 수 있다.
+또한 fit(학습)은 hist에 저장하여 리스트 형태로 지표값들을 저장할 수 있음
 '''
 from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_loss', patience=3, mode='min', verbose=1)

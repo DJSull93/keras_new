@@ -14,8 +14,6 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
  random_state=66, train_size=0.8)
 
 '''
-하지만 앞서 train_test_split 두번 하는것 조차 번거롭다.
-
 '''
 
 # 2. 모델 구성
@@ -36,8 +34,8 @@ model.fit(x_train, y_train, epochs=80,
  verbose=1, batch_size=1, validation_split=0.3, shuffle=True)
 
 '''
-이처럼 fit에서 자체적으로 검증셋을 분리하는 파라미터가 존재하며, 
-사용하면 된다. 
+fit에서 자체적으로 검증셋을 분리하는 파라미터가 존재함
+-> validation_split
 '''
 
 # 4. 평가 예측

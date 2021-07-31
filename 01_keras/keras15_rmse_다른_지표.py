@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_squared_error
 '''
-잠시 언급했던 대로 학습의 정확도를 판단할떄 다양한 지표를 사용하며,
+학습의 정확도를 판단할떄 다양한 지표를 사용함
 
-이번에는 rmse에 대해 학습. 기존의 mse(mean squared error)는 
-평균 제곱을 통해 음수값과의 차이도 양수로 변환, 오차의 합을 구할 수 있었음
+mse(mean squared error)는 
+평균 제곱을 통해 음수값과의 차이도 양수로 변환, 오차의 합을 구할 수 있음
 
-허나 이는 제곱 수 이므로 값이 크기에 값을 줄이기위해 이의 제곱근인 rmse를 사용할 수 있음
+허나 제곱 수 이므로 값이 크기에 값을 줄이기위해 이의 제곱근인 rmse를 사용할 수 있음
 '''
 
 
@@ -64,8 +64,8 @@ def RMSE(y_test, y_predict):
 rmse = RMSE(y_test, y_predict)
 
 '''
-RMSE는 따로 파라미터로 제공되지 않으므로 함수를 정희해서 사용함.
-기존 mse를 mean_squared_error로 호출 후 sqrt(루트) 씌움 - 끝
+RMSE는 따로 파라미터로 제공되지 않으므로 함수를 정의해서 사용
+기존 mse를 mean_squared_error로 호출 후 sqrt(루트) 씌움 
 '''
 
 print('rmse score : ', rmse)

@@ -11,18 +11,13 @@ y = np.array([1,2,3,4,5,6,7,8,9,10,11,12,13])
 # train_test_split만 사용
 
 '''
-일일이 작업하는건 언제나 불편하고, 기존에 배운 함수를 자유자재로 
-구사할 수 있어야함. 아래 예시는 기존에 배웠던 train_test_split를
-두번 사용해서 학습과 테스트 분리 후, 다시 테스트에서 테스트와 검증데이터를 
-분리하는 과정이다. 
-
-쉽게 설명하자면
+train_test_split를 두번 사용해서 학습과 테스트 분리 후, 다시 테스트에서 
+테스트와 검증데이터를 분리하는 과정
 
 전체 데이터 - train_test_split -> 학습, 테스트
 테스트 - train_test_split -> 테스트, 검증
 
-총 6개의 데이터 세트가 구성된다.
-
+총 6개의 데이터 세트가 구성
 '''
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=66, test_size=0.4)
