@@ -1,6 +1,7 @@
 '''
 텍스트 데이터 학습을 위해 텍스트를 연산 가능한 정수로 변환
 Tokenizer : 빈도 많은 단어 우선, 이후 순차적으로 단어 정수로 변환
+-> 카테고리컬 분류처럼 토큰값 사이의 상관관계 제거 필요
 '''
 
 from tensorflow.keras.preprocessing.text import Tokenizer
