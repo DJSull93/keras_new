@@ -2,11 +2,6 @@
 # compare with banilar
 # save_dir -> temp and delete
 
-# train data augment-> 120% of all dataset
-# compare with banilar
-# save_dir -> temp and delete
-
-
 import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
