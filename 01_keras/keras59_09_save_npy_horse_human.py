@@ -44,5 +44,5 @@ np.save('./_save/_NPY/k59_hh_y_test', arr=xy_test[0][1])
 
 # print(xy_train[0][0]) # 
 # print(xy_train[0][1]) # 
-print(xy_train[0][0].shape) # (771, 150, 150, 3)
+print(xy_train[0][0].shape) # (771, 150, 150, 3)                            
 print(xy_train[0][1].shape) # (771, 2)
