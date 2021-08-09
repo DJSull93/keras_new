@@ -83,4 +83,3 @@ plt.show()
 
 # scatter를 통해 x, y 축을 그리고
 # plot으로 x와 y_predict를 x, y로 지정, 색상은 붉은색으로 지정
-# show는 표를 출력. 해당 코드를 실행하여 확인 요망

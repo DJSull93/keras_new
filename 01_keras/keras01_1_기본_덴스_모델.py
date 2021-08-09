@@ -37,7 +37,7 @@ print('4의 예측값 : ', result)
 # 정리 
 
 # "AI  학습 : 최소의 loss인 최적의 weight 탐색 과정"
-# 정제된 data 확보가 목표 - 형태를 외울 것
+# 정제된 data 확보가 목표 
 
 # MSE
 # Lose Fuction(손실 함수) 중의 한 종류로, 
