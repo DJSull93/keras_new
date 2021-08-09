@@ -90,7 +90,7 @@ hist = model.fit(x_train, y_train, epochs=10000, verbose=2,
                 validation_steps=4)
 end_time = time.time() - start_time
 
-# 4. predict eval -> no need to
+# 4. predict eval 
 
 acc = hist.history['acc']
 val_acc = hist.history['val_acc']

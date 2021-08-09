@@ -1,12 +1,4 @@
-# Global Average Pooling
-'''
-Conv2D 는 4차원 데이터 입력, 최종 레이어인 Dense는 2차원 입력이므로
-Flatten으로 2차원 변환이 필요했으나, GlobalAveragePooling을 통해
-MaxPool과 유사하게 특성값을 추출한 상태로 2차원변환 가능
-
-Flatten : 4차원 데이터 -> 단순 나열을 통해 2차원 변환
-GlobalAveragePooling : 4차원 데이터 -> 특성 추출로 차원 축소
-'''
+# Global Average Pooling // Reduce Learning Rate
 
 # example cifar100
 
@@ -23,8 +15,6 @@ x_test = x_test.reshape(10000, 32*32*3) # (10000, 32, 32, 3)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
 scaler = StandardScaler()
-# scaler.fit(x_train) 
-# x_train = scaler.transform(x_train) 
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test) 
 
@@ -66,24 +56,42 @@ model.add(GlobalAveragePooling2D())
 model.add(Dense(100, activation='softmax'))
 
 # 3. comple fit // metrics 'acc'
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='acc')
+from tensorflow.keras.optimizers import Adam
 
-from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', patience=10, mode='min', verbose=1)
+op = Adam(lr = 0.001)
+
+# model.compile(loss='categorical_crossentropy', 
+#                 optimizer='adam', metrics='acc')
+model.compile(loss='categorical_crossentropy', 
+                optimizer=op, metrics='acc')
+
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+es = EarlyStopping(monitor='val_loss', patience=15, 
+                mode='min', verbose=1)
+lr = ReduceLROnPlateau(monitor='val_loss', patience=5, 
+                mode='auto', verbose=1, factor=0.5)
 
 import time 
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=100, batch_size=256, verbose=2,
-    validation_split=0.15, callbacks=[es])
+hist = model.fit(x_train, y_train, epochs=300, batch_size=512, verbose=2,
+    validation_split=0.15, callbacks=[es, lr])
 end_time = time.time() - start_time
 
-# 4. predict eval -> no need to
+# 4. predict eval 
 
 loss = model.evaluate(x_test, y_test, batch_size=256)
 print("======================================")
+
+acc = hist.history['acc']
+val_acc = hist.history['val_acc']
+loss = hist.history['loss']
+val_loss = hist.history['val_loss']
+
 print("total time : ", end_time)
-print('loss : ', loss[0])
-print('acc : ', loss[1])
+print('acc : ',acc[-15])
+print('val_acc : ',val_acc[-15])
+print('loss : ',loss[-15])
+print('val_loss : ',val_loss[-15])  
 
 # 5. plt visualize
 import matplotlib.pyplot as plt
@@ -123,7 +131,15 @@ total time :  122.86703252792358
 loss :  2.1693880558013916
 acc :  0.4564000070095062
 
+with dropout
 total time :  158.07011938095093
 loss :  2.1041903495788574
 acc :  0.47209998965263367
+
+with lr reduce
+total time :  177.57455277442932
+acc :  0.5527999997138977
+val_acc :  0.4381333291530609
+loss :  1.6004047393798828
+val_loss :  2.255129098892212
 '''
