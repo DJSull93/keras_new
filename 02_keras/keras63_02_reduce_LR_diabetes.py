@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 
 
 x_train, x_test, y_train, y_test = train_test_split(x_data, y_data,
-      test_size=0.25, shuffle=True, random_state=9)
+      test_size=0.2, shuffle=True, random_state=66)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
 scaler = RobustScaler()
@@ -29,7 +29,7 @@ from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Input, Conv1D, Flatten, Dropout, GlobalAveragePooling1D, MaxPool1D
 
 model = Sequential()
-model.add(Conv1D(filters=32, kernel_size=2, padding='same',                          
+model.add(Conv1D(filters=16, kernel_size=2, padding='same',                          
                         activation='relu', input_shape=(10, 1))) 
 model.add(Dropout(0.2))
 model.add(Conv1D(32, 2, padding='same', activation='relu'))
@@ -41,6 +41,10 @@ model.add(MaxPool1D())
 model.add(Conv1D(128, 2, padding='same', activation='relu'))
 model.add(Dropout(0.2))
 model.add(Conv1D(128, 2, padding='same', activation='relu'))
+# model.add(MaxPool1D())
+# model.add(Conv1D(256, 2, padding='same', activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(Conv1D(256, 2, padding='same', activation='relu'))
 model.add(MaxPool1D())
 model.add(GlobalAveragePooling1D())
 model.add(Dense(1))
@@ -59,11 +63,11 @@ from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 es = EarlyStopping(monitor='val_loss', patience=20, 
                 mode='min', verbose=1)
 lr = ReduceLROnPlateau(monitor='val_loss', patience=5, 
-                mode='auto', verbose=1, factor=0.5)
+                mode='auto', verbose=1, factor=0.8)
 
 import time 
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=100, batch_size=32, verbose=2,
+hist = model.fit(x_train, y_train, epochs=1000, batch_size=16, verbose=2,
     validation_split=0.25, callbacks=[es, lr])
 end_time = time.time() - start_time
 
@@ -92,8 +96,8 @@ loss :  2692.208251953125
 R^2 score :  0.5333766732565846
 
 with ir
-total time :  6.690438747406006
-loss :  3514.903076171875
-val_loss :  4142.02587890625
-R^2 score :  0.4534412432797532
+total time :  6.330353021621704
+loss :  3945.3759765625
+val_loss :  4202.00439453125
+R^2 score :  0.5144904695143324
 '''

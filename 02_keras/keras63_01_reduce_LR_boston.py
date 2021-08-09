@@ -35,13 +35,13 @@ model.add(Conv1D(filters=64, kernel_size=2, padding='same',
 model.add(Dropout(0.2))
 model.add(Conv1D(64, 2, padding='same', activation='relu'))
 # model.add(MaxPool2D())
-model.add(Conv1D(100, 2, padding='same', activation='relu'))
+model.add(Conv1D(128, 2, padding='same', activation='relu'))
 model.add(Dropout(0.2))
-model.add(Conv1D(100, 2, padding='same', activation='relu'))
+model.add(Conv1D(128, 2, padding='same', activation='relu'))
 # model.add(MaxPool2D())
-model.add(Conv1D(128, 2, padding='same', activation='relu'))
+model.add(Conv1D(256, 2, padding='same', activation='relu'))
 model.add(Dropout(0.3))
-model.add(Conv1D(128, 2, padding='same', activation='relu'))
+model.add(Conv1D(256, 2, padding='same', activation='relu'))
 # model.add(MaxPool2D())
 model.add(GlobalAveragePooling1D())
 model.add(Dense(1))
@@ -60,11 +60,11 @@ from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 es = EarlyStopping(monitor='val_loss', patience=20, 
                 mode='min', verbose=1)
 lr = ReduceLROnPlateau(monitor='val_loss', patience=5, 
-                mode='auto', verbose=1, factor=0.5)
+                mode='auto', verbose=1, factor=0.8)
 
 import time 
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=100, batch_size=32, verbose=2,
+hist = model.fit(x_train, y_train, epochs=1000, batch_size=32, verbose=2,
     validation_split=0.15, callbacks=[es, lr])
 end_time = time.time() - start_time
 
@@ -93,8 +93,8 @@ loss :  15.667049407958984
 R^2 score :  0.8125568409123047
 
 with ir
-total time :  10.346274137496948
-loss :  19.525121688842773
-val_loss :  16.031455993652344
-R^2 score :  0.8215105239390339
+total time :  12.336548805236816
+loss :  18.767131805419922
+val_loss :  19.854581832885742
+R^2 score :  0.8374119752548896
 '''

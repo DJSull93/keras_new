@@ -57,12 +57,12 @@ from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 es = EarlyStopping(monitor='val_loss', patience=20, 
                 mode='min', verbose=1)
 lr = ReduceLROnPlateau(monitor='val_loss', patience=5, 
-                mode='auto', verbose=1, factor=0.5)
+                mode='auto', verbose=1, factor=0.8)
 
 import time 
 start_time = time.time()
 hist = model.fit(x_train, y_train, epochs=100, batch_size=32, verbose=2,
-    validation_split=0.25, callbacks=[es, lr])
+    validation_split=0.2, callbacks=[es, lr])
 end_time = time.time() - start_time
 
 # 4. 평가 예측
@@ -86,9 +86,9 @@ loss :  0.12980742752552032
 acc :  0.9736841917037964
 
 with lr
-total time :  5.6127707958221436
-acc :  0.9523809552192688
-val_acc :  0.9642857313156128
-loss :  0.12522588670253754
-val_loss :  0.07193730771541595
+total time :  5.221213102340698
+acc :  0.966292142868042
+val_acc :  1.0
+loss :  0.061114802956581116
+val_loss :  0.029355306178331375
 '''
