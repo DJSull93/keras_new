@@ -1,7 +1,8 @@
-# Classifier -> Regression 
-# 1. check Classifier 2. check Regression
 '''
-# 1. -> ValueError: Unknown label type: 'continuous'
+회귀 문제 : regressor 사용
+싸이킷런 라이브러리 활용, 머신러닝 모델 다중 호출,
+
+for loop 구성으로 각 모델별 성능 평가
 '''
 
 import numpy as np

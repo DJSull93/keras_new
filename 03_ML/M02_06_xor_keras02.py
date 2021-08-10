@@ -1,5 +1,6 @@
 '''
 xor gate  - and, or, xor gate
+멀티 퍼셉트론 레이어로 구성 -> 성능은 SVC와 유사함
 '''
 
 from sklearn.svm import SVC

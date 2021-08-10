@@ -1,3 +1,10 @@
+'''
+분류 문제 : classifier 사용
+싸이킷런 라이브러리 활용, 머신러닝 모델 다중 호출,
+
+for loop 구성으로 각 모델별 성능 평가
+'''
+
 import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split

@@ -1,5 +1,6 @@
 '''
 xor gate  - and, or, xor gate
+SVC : 비선형 분포 데이터 구분 가능
 '''
 
 from sklearn.svm import SVC
