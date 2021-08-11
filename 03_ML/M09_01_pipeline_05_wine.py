@@ -4,7 +4,6 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 # 1. data
-
 x_data = np.load('./_save/_NPY/k55_x_data_wine.npy')
 y_data = np.load('./_save/_NPY/k55_y_data_wine.npy')
 
