@@ -63,5 +63,6 @@ print('Best score  :', model.best_score_)
 # RandomForestRegressor(max_depth=12, 
 #                       min_samples_leaf=3, 
 #                       min_samples_split=5,
-#                       n_jobs=2)
+#                       n_estimators=200, 
+#                       n_jobs=-1)
 # Best score  : 0.8588147793746799
