@@ -1,5 +1,5 @@
 # Practice
-# make model ith 07_01's best parameter 
+# make model with 07_01's best parameter 
 
 # GridSearchCV - iris example
 # Dictionary (key, value) -> all parameter setting
