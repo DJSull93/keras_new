@@ -10,9 +10,7 @@ parameters = [
     {"n_jobs": [-1, 2, 4]},
 ]
 '''
-# GridSearchCV - iris example
-# Dictionary (key, value) -> all parameter setting
-# {model: node_5, 10, 15}...
+
 
 import numpy as np
 import warnings 

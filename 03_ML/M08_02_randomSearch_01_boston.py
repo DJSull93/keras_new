@@ -17,10 +17,10 @@ import warnings
 warnings.filterwarnings(action='ignore')
 
 # 1. data
-from sklearn.model_selection import GridSearchCV, KFold, cross_val_score, train_test_split
+from sklearn.model_selection import RandomizedSearchCV, GridSearchCV, KFold, cross_val_score, train_test_split
 
-x_data = np.load('./_save/_NPY/k55_x_data_diabetes.npy')
-y_data = np.load('./_save/_NPY/k55_y_data_diabetes.npy')
+x_data = np.load('./_save/_NPY/k55_x_data_boston.npy')
+y_data = np.load('./_save/_NPY/k55_y_data_boston.npy')
 
 n_split = 5
 kfold = KFold(n_splits=n_split, shuffle=True, 
@@ -42,7 +42,7 @@ parameters = [{
     "n_jobs": [-1] # =. qauntity of cpu; -1 = all
 }]
 
-model = GridSearchCV(RandomForestRegressor(), parameters, cv=kfold)
+model = RandomizedSearchCV(RandomForestRegressor(), parameters, cv=kfold, verbose=1)
 
 # 3. 컴파일 훈련
 import time
@@ -56,10 +56,19 @@ print('totla time : ', et)
 print('Best estimator : ', model.best_estimator_)
 print('Best score  :', model.best_score_)
 
-# totla time :  65.1192524433136
+# GridSearchCV
+# totla time :  66.32613706588745
 # Best estimator :  
 # RandomForestRegressor(max_depth=12, 
-#                       min_samples_leaf=10, 
+#                       min_samples_leaf=3, 
 #                       min_samples_split=5,
+#                       n_estimators=200, 
 #                       n_jobs=-1)
-# Best score  : 0.4628782263759554
+# Best score  : 0.8588147793746799
+
+# RandomizedSearchCV
+# Fitting 5 folds for each of 10 candidates, totalling 50 fits
+# totla time :  6.367573022842407
+# Best estimator :  RandomForestRegressor(max_depth=12, min_samples_leaf=3, n_estimators=200,
+#                       n_jobs=-1)
+# Best score  : 0.8593875577705855

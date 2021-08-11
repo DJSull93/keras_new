@@ -11,15 +11,16 @@ parameters = [
 ]
 '''
 
+
 import numpy as np
 import warnings 
 warnings.filterwarnings(action='ignore')
 
 # 1. data
-from sklearn.model_selection import GridSearchCV, KFold, cross_val_score, train_test_split
+from sklearn.model_selection import RandomizedSearchCV, GridSearchCV, KFold, cross_val_score, train_test_split
 
-x_data = np.load('./_save/_NPY/k55_x_data_cancer.npy')
-y_data = np.load('./_save/_NPY/k55_y_data_cancer.npy')
+x_data = np.load('./_save/_NPY/k55_x_data_wine.npy')
+y_data = np.load('./_save/_NPY/k55_y_data_wine.npy')
 
 n_split = 5
 kfold = KFold(n_splits=n_split, shuffle=True, 
@@ -41,7 +42,7 @@ parameters = [{
     "n_jobs": [-1] # =. qauntity of cpu; -1 = all
 }]
 
-model = GridSearchCV(RandomForestClassifier(), parameters, cv=kfold, verbose=1)
+model = RandomizedSearchCV(RandomForestClassifier(), parameters, cv=kfold, verbose=1)
 # Fitting 5 folds for each of 128 candidates, totalling 640 fits
 
 # 3. 컴파일 훈련
@@ -56,10 +57,17 @@ print('totla time : ', et)
 print('Best estimator : ', model.best_estimator_)
 print('Best score  :', model.best_score_)
 
-# totla time :  69.42868947982788
+# GridSearchCV
+# totla time :  103.54260993003845
 # Best estimator :  
-# RandomForestClassifier(max_depth=8, 
+# RandomForestClassifier(max_depth=12, 
 #                        min_samples_leaf=3, 
 #                        min_samples_split=5,
 #                        n_jobs=-1)
-# Best score  : 0.9666356155876417
+# Best score  : 0.6457743219862
+
+# RandomizedSearchCV
+# Fitting 5 folds for each of 10 candidates, totalling 50 fits
+# totla time :  9.211649894714355
+# Best estimator :  RandomForestClassifier(max_depth=12, min_samples_leaf=3, n_jobs=-1)
+# Best score  : 0.6437318379854495
