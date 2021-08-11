@@ -1,12 +1,3 @@
-'''
-train, test split -> test(label) unused in training
-solution 
-train -> test ;
-test -> train -> /2 => use all label data for training
-'''
-'''
-국화꽃 종 다중 분류 예제
-'''
 import numpy as np
 import warnings 
 warnings.filterwarnings(action='ignore')
