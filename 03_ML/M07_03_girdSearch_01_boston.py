@@ -44,7 +44,7 @@ parameters = [{
     "n_jobs": [-1] # =. qauntity of cpu; -1 = all
 }]
 
-model = GridSearchCV(RandomForestRegressor(), parameters, cv=kfold)
+model = GridSearchCV(RandomForestRegressor(), parameters, cv=kfold, verbose=1)
 
 # 3. 컴파일 훈련
 import time
@@ -58,6 +58,7 @@ print('totla time : ', et)
 print('Best estimator : ', model.best_estimator_)
 print('Best score  :', model.best_score_)
 
+# totla time :  66.32613706588745
 # Best estimator :  
 # RandomForestRegressor(max_depth=12, 
 #                       min_samples_leaf=3, 
