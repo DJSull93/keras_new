@@ -2,6 +2,10 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import numpy as np
+from sklearn.datasets import load_breast_cancer
+
+# 1-1. data
+datasets = load_breast_cancer()
 
 # 1. data
 x_data = np.load('./_save/_NPY/k55_x_data_cancer.npy')
@@ -30,3 +34,17 @@ acc :  0.9230769230769231
  0.00440394 0.00420838 0.10309655 0.01492929 0.10693843 0.11320165
  0.01210023 0.02702782 0.04052561 0.12297291 0.00612343 0.00770545]
 '''
+
+import matplotlib.pyplot as plt
+
+def plot_feature_importance_dataset(model):
+      n_features = datasets.data.shape[1]
+      plt.barh(np.arange(n_features), model.feature_importances_,
+            align='center')
+      plt.yticks(np.arange(n_features), datasets.feature_names)
+      plt.xlabel("Feature Importances")
+      plt.ylabel("Features")
+      plt.ylim(-1, n_features)
+
+plot_feature_importance_dataset(model)
+plt.show()

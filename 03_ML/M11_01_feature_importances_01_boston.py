@@ -2,6 +2,10 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 import numpy as np
+from sklearn.datasets import load_boston
+
+# 1-1. data
+datasets = load_boston()
 
 # 1. data
 x_data = np.load('./_save/_NPY/k55_x_data_boston.npy')
@@ -28,3 +32,17 @@ r2 :  0.921791314508456
  0.01371094 0.06777476 0.00397583 0.01388399 0.01765741 0.01394635
  0.41546631]
 '''
+
+import matplotlib.pyplot as plt
+
+def plot_feature_importance_dataset(model):
+      n_features = datasets.data.shape[1]
+      plt.barh(np.arange(n_features), model.feature_importances_,
+            align='center')
+      plt.yticks(np.arange(n_features), datasets.feature_names)
+      plt.xlabel("Feature Importances")
+      plt.ylabel("Features")
+      plt.ylim(-1, n_features)
+
+plot_feature_importance_dataset(model)
+plt.show()
