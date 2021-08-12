@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
-from konlpy.tag import Okt
 
 # 1. data
 path = './03_dacon_comp/_data/'
@@ -34,19 +33,18 @@ for i, j in enumerate(x_pred):
 
 def text_preprocessing(text_list):
     
-    stopwords = ['을', '를', '이', '가', '은', '는', 'null'] #불용어 설정
-    tokenizer = Okt() #형태소 분석기 
+    stopwords = ['을', '를', '이', '가', '은', '는', 'null']
+    tokenizer = Okt() 
     token_list = []
     
     for text in text_list:
-        txt = re.sub('[^가-힣a-z]', ' ', text) #한글과 영어 소문자만 남기고 다른 글자 모두 제거
-        token = tokenizer.morphs(txt) #형태소 분석
-        token = [t for t in token if t not in stopwords or type(t) != float] #형태소 분석 결과 중 stopwords에 해당하지 않는 것만 추출
+        txt = re.sub('[^가-힣a-z]', ' ', text) 
+        token = tokenizer.morphs(txt)
+        token = [t for t in token if t not in stopwords or type(t) != float]
         token_list.append(token)
         
     return token_list, tokenizer
 
-#형태소 분석기를 따로 저장한 이유는 후에 test 데이터 전처리를 진행할 때 이용해야 되기 때문입니다. 
 x_train, okt = text_preprocessing(x_train) 
 x_pred, okt = text_preprocessing(x_pred) 
 
@@ -55,12 +53,12 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 def text2sequence(train_text, max_len=100):
     
-    tokenizer = Tokenizer() #keras의 vectorizing 함수 호출
-    tokenizer.fit_on_texts(train_text) #train 문장에 fit
-    train_X_seq = tokenizer.texts_to_sequences(train_text) #각 토큰들에 정수 부여
-    vocab_size = len(tokenizer.word_index) + 1 #모델에 알려줄 vocabulary의 크기 계산
+    tokenizer = Tokenizer() 
+    tokenizer.fit_on_texts(train_text)
+    train_X_seq = tokenizer.texts_to_sequences(train_text) 
+    vocab_size = len(tokenizer.word_index) + 1 
     print('vocab_size : ', vocab_size)
-    X_train = pad_sequences(train_X_seq, maxlen = max_len) #설정한 문장의 최대 길이만큼 padding
+    X_train = pad_sequences(train_X_seq, maxlen = max_len) 
     
     return X_train, vocab_size, tokenizer
 

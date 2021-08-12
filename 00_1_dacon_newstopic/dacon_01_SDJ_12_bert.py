@@ -18,7 +18,7 @@ np.random.seed(66)
 BATCH_SIZE = 100
 NUM_EPOCHS = 30
 VALID_SPLIT = 0.08
-MAX_LEN = 44 # EDA에서 추출된 Max Length
+MAX_LEN = 44
 DATA_IN_PATH = 'data_in/KOR'
 DATA_OUT_PATH = "data_out/KOR"
 
@@ -34,15 +34,15 @@ def bert_tokenizer(sent, MAX_LEN):
     
     encoded_dict = tokenizer.encode_plus(
         text = sent,
-        add_special_tokens = True, # Add '[CLS]' and '[SEP]'
-        max_length = MAX_LEN,           # Pad & truncate all sentences.
+        add_special_tokens = True, 
+        max_length = MAX_LEN,           
         pad_to_max_length = True,
-        return_attention_mask = True   # Construct attn. masks.
+        return_attention_mask = True   
     )
     
     input_id = encoded_dict['input_ids']
-    attention_mask = encoded_dict['attention_mask'] # And its attention mask (simply differentiates padding from non-padding).
-    token_type_id = encoded_dict['token_type_ids'] # differentiate two sentences
+    attention_mask = encoded_dict['attention_mask']
+    token_type_id = encoded_dict['token_type_ids'] 
     
     return input_id, attention_mask, token_type_id
 
@@ -83,7 +83,6 @@ class TFBertClassifier(tf.keras.Model):
         
     def call(self, inputs, attention_mask=None, token_type_ids=None, training=False):
         
-        #outputs 값: # sequence_output, pooled_output, (hidden_states), (attentions)
         outputs = self.bert(inputs, attention_mask=attention_mask, token_type_ids=token_type_ids)
         pooled_output = outputs[1] 
         pooled_output = self.dropout(pooled_output, training=training)
@@ -108,16 +107,12 @@ cls_model.compile(optimizer=optimizer, loss=loss, metrics=[metric])
 
 model_name = "tf2_bert"
 
-# overfitting을 막기 위한 ealrystop 추가
 es = EarlyStopping(monitor='val_loss', min_delta=0.0001,
      patience=5)
-# min_delta: the threshold that triggers the termination (acc should at least improve 0.0001)
-# patience: no improvment epochs (patience = 1, 1번 이상 상승이 없으면 종료)\
 
 checkpoint_path = os.path.join(DATA_OUT_PATH, model_name, 'weights.h5')
 checkpoint_dir = os.path.dirname(checkpoint_path)
 
-# Create path if exists
 if os.path.exists(checkpoint_dir):
     print("{} -- Folder already exists \n".format(checkpoint_dir))
 else:
@@ -127,7 +122,6 @@ else:
 mcp = ModelCheckpoint(
     checkpoint_path, monitor='val_loss', verbose=2, save_best_only=True, save_weights_only=True)
 
-# 학습과 eval 시작
 history = cls_model.fit(train_inputs, train_data_labels, epochs=NUM_EPOCHS, batch_size=BATCH_SIZE,
                     validation_split = VALID_SPLIT, callbacks=[es, mcp, lr], verbose=2)
 

@@ -76,7 +76,6 @@ n_fold = 5
 cv = StratifiedKFold(n_splits = n_fold, shuffle=True, random_state=42)
 
 test_y = np.zeros((test_x.shape[0], 7))
-# print(test_x.shape, test_y.shape)
 
 es = EarlyStopping(monitor='val_loss', min_delta=0.001, patience=7,
                    verbose=1, mode='min', baseline=None, restore_best_weights=True)
@@ -89,7 +88,7 @@ for i, (i_trn, i_val) in enumerate(cv.split(train_x, Y_train), 1):
             validation_data=(train_x[i_val], to_categorical(Y_train[i_val])),
             epochs=10,
             batch_size=4096,
-            callbacks=[es])     # 조기 종료 옵션
+            callbacks=[es])     
                       
     test_y += model.predict(test_x) / n_fold
 
