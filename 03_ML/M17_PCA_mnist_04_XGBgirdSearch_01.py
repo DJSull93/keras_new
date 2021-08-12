@@ -1,16 +1,15 @@
 # Grid, RandomSearch with mnist
 
 params = [
-    {"n_estimators":[100, 200, 300], "learning_rate":[0.1, 0.3, 0.001, 0.01],
-    "max_depth":[4, 5, 6], "n_jobs":[-1]},
-    {"n_estimators":[90, 100, 110], "learning_rate":[0.1, 0.001, 0.01],
-    "max_depth":[4, 5, 6], "colsample_bytree":[0.6, 0.9, 1], "n_jobs":[-1]},
-    {"n_estimators":[90, 110], "learning_rate":[0.1, 0.3, 0.001, 0.01],
-    "max_depth":[4, 5, 6], "colsample_bytree":[0.6, 0.9, 1],
-    "colsample_bylevel":[0.6, 0.7, 0.9], "n_jobs":[-1]}
+    {"n_estimators":[90, 100, 110, 200, 300], 
+    "learning_rate":[0.001, 0.01],
+    "max_depth":[4, 5, 6], 
+    "colsample_bytree":[0.6, 0.9, 1], 
+    "colsample_bylevel":[0.6, 0.7, 0.9],
+    "n_jobs":[-1]}
 ]
 
-# Practice : n_comp upper than 1.0 : 713
+# Practice : n_comp upper than 0.95 : 154
 # make model -> Tensorflow DNN, compare with banila
 
 from sklearn.tree import DecisionTreeClassifier
@@ -31,7 +30,7 @@ y = np.append(y_train, y_test, axis=0) # (70000,)
 
 x = x.reshape(x.shape[0], x.shape[1]*x.shape[2])
 
-pca = PCA(n_components=713)
+pca = PCA(n_components=154)
 x = pca.fit_transform(x)
 
 pca_EVR = pca.explained_variance_ratio_
@@ -54,7 +53,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D, GlobalAveragePooling2D, Dropout
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV, KFold, cross_val_score, train_test_split
 
-model = GridSearchCV(XGBClassifier(), params, verbose=1)
+model = RandomizedSearchCV(XGBClassifier(), params, verbose=1)
 
 import time
 
@@ -89,6 +88,7 @@ time :  36.505455017089844
 loss :  0.2318371683359146
 acc :  0.9433731436729431
 
-GridSearchCV
+RandomizedSearchCV_XGB
+
 
 '''
