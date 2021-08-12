@@ -1,5 +1,6 @@
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, GradientBoostingClassifier
+from xgboost import XGBRegressor, XGBClassifier
 from sklearn.model_selection import train_test_split
 import numpy as np
 from sklearn.datasets import load_diabetes
@@ -15,7 +16,7 @@ x_train, x_test, y_train, y_test = train_test_split(x_data, y_data,
       test_size=0.15, shuffle=True, random_state=1234)
 
 # 2. model
-model = RandomForestRegressor()
+model = GradientBoostingRegressor()
 
 # 3. fit
 model.fit(x_train, y_train)
@@ -45,3 +46,10 @@ def plot_feature_importance_dataset(model):
 
 plot_feature_importance_dataset(model)
 plt.show()
+
+'''
+GradientBoostingRegressor
+r2 :  0.45956469341690287
+[0.04684428 0.01878494 0.30428974 0.10471332 0.02694582 0.05384071
+ 0.04732711 0.01424676 0.31825102 0.06475628]
+'''

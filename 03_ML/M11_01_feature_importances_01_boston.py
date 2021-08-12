@@ -1,5 +1,6 @@
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, GradientBoostingClassifier
+from xgboost import XGBRegressor, XGBClassifier
 from sklearn.model_selection import train_test_split
 import numpy as np
 from sklearn.datasets import load_boston
@@ -15,7 +16,7 @@ x_train, x_test, y_train, y_test = train_test_split(x_data, y_data,
       test_size=0.15, shuffle=True, random_state=1234)
 
 # 2. model
-model = RandomForestRegressor()
+model = GradientBoostingRegressor()
 
 # 3. fit
 model.fit(x_train, y_train)

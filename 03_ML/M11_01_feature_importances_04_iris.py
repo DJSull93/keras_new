@@ -1,5 +1,6 @@
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingRegressor, GradientBoostingClassifier
+from xgboost import XGBRegressor, XGBClassifier
 from sklearn.model_selection import train_test_split
 import numpy as np
 from sklearn.datasets import load_iris

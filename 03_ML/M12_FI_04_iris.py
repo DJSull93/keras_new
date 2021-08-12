@@ -1,22 +1,39 @@
+# 실습
+# 피쳐임포턴스 진행 후 필요 없는 칼럼 (하위20~25%) 제거 후 결과 관측
+# 각 모델 결과 도출
+# 기존 모델과 비교
+
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingRegressor, GradientBoostingClassifier
 from xgboost import XGBRegressor, XGBClassifier
 from sklearn.model_selection import train_test_split
 import numpy as np
-from sklearn.datasets import load_wine
+from sklearn.datasets import load_iris
 
 # 1-1. data
-datasets = load_wine()
+datasets = load_iris()
 
 # 1. data
 x_data = datasets.data
 y_data = datasets.target
 
+print(datasets.feature_names)
+# ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']
+
+import pandas as pd
+
+datadf = pd.DataFrame(x_data, columns=datasets.feature_names)
+
+# print(datadf)
+
+# x_data = datadf[['petal length (cm)', 
+#                 'petal width (cm)']]
+
 x_train, x_test, y_train, y_test = train_test_split(x_data, y_data,
       test_size=0.25, shuffle=True, random_state=1234)
 
 # 2. model
-model = GradientBoostingClassifier()
+model = DecisionTreeClassifier()
 
 # 3. fit
 model.fit(x_train, y_train)
@@ -27,13 +44,7 @@ print('acc : ', acc)
 
 print(model.feature_importances_)
 
-'''
-acc :  0.6710204081632654
-[0.07364588 0.10232124 0.08157261 0.08736527 0.0834641  0.09156399
- 0.09347665 0.1030764  0.08596974 0.08171103 0.11583309]
-'''
-
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 # def plot_feature_importance_dataset(model):
 #       n_features = datasets.data.shape[1]
@@ -46,3 +57,29 @@ acc :  0.6710204081632654
 
 # plot_feature_importance_dataset(model)
 # plt.show()
+
+'''
+DecisionTreeClassifier
+banilar
+acc :  0.9736842105263158
+data cut
+acc :  0.9473684210526315
+
+RandomForestClassifier
+banilar
+acc :  0.9473684210526315
+data cut
+acc :  0.9473684210526315
+
+GradientBoostingClassifier
+banilar
+acc :  0.9473684210526315
+data cut
+acc :  0.9736842105263158
+
+XGBClassifier
+banilar
+acc :  0.9736842105263158
+data cut
+acc :  0.9736842105263158
+'''
