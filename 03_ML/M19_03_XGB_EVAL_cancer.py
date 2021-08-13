@@ -21,11 +21,11 @@ scaler = RobustScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 
-model = XGBClassifier(n_setimators=100, learning_rate=0.1,
+model = XGBClassifier(n_estimators=100, learning_rate=0.1,
                      n_jobs=-1)
 
 model.fit(x_train, y_train, verbose=1, 
-            # eval_metric=['auc', 'error'],
+            eval_metric=['auc', 'error'],
             eval_set=[(x_train, y_train), (x_test, y_test)]
 )
 
@@ -35,6 +35,30 @@ print('result :', result)
 y_pred = model.predict(x_test)
 acc = accuracy_score(y_test, y_pred)
 print('acc score :', acc)
+
+print("=========================================")
+import matplotlib.pyplot as plt
+
+hist = model.evals_result()
+print(hist)
+
+epochs = len(hist['validation_0']['auc'])
+x_axis = range(0,epochs)
+
+fig, ax = plt.subplots()
+ax.plot(x_axis, hist['validation_0']['auc'], label='Train')
+ax.plot(x_axis, hist['validation_1']['auc'], label='Test')
+ax.legend()
+plt.ylabel('auc')
+plt.title('XGBoost auc')
+
+fig, ax = plt.subplots()
+ax.plot(x_axis, hist['validation_0']['error'], label='Train')
+ax.plot(x_axis, hist['validation_1']['error'], label='Test')
+ax.legend()
+plt.ylabel('error')
+plt.title('XGBoost error')
+plt.show()
 
 '''
 default : logloss

@@ -21,10 +21,11 @@ scaler = RobustScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 
-model = XGBRegressor(n_estimators=20, learning_rate=0.052,
+model = XGBRegressor(n_estimators=200, learning_rate=0.052,
                      n_jobs=-1)
 
 model.fit(x_train, y_train, verbose=1, 
+            early_stopping_rounds=10,
             eval_metric=['rmse', 'mae', 'logloss'],
             eval_set=[(x_train, y_train), (x_test, y_test)]
             # train set 명시해야 validation 지정 가능
