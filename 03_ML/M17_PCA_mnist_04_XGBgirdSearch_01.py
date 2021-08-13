@@ -89,6 +89,15 @@ loss :  0.2318371683359146
 acc :  0.9433731436729431
 
 RandomizedSearchCV_XGB
-
+totla time :  6810.380675792694
+Best estimator :  XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=0.6,              colsample_bynode=1, colsample_bytree=1, gamma=0, gpu_id=-1,
+              importance_type='gain', interaction_constraints='',
+              learning_rate=0.3, max_delta_step=0, max_depth=5,
+              min_child_weight=1, missing=nan, monotone_constraints='()',
+              n_estimators=300, n_jobs=-1, num_parallel_tree=1,
+              objective='multi:softprob', random_state=0, reg_alpha=0,
+              reg_lambda=1, scale_pos_weight=None, subsample=1,
+              tree_method='exact', validate_parameters=1, verbosity=None)
+Best score  : 0.967109081255576
 
 '''
