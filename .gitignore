@@ -1,2 +1,7 @@
 _save
-03_dacon_comp/_save_csv
+00_1_dacon_newstopic/_save_csv
+00_1_dacon_newstopic/_data
+
+00_2_dacon_climate
+bert_ckpt
+tf2_bert_classifier
